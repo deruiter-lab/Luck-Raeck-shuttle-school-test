@@ -1041,7 +1041,7 @@ body.onsplash .tbar{display:none}
 .dg-court{flex:1 1 0;min-height:130px;display:flex;justify-content:center;align-items:center;background:var(--blue-soft);border-radius:24px;padding:6px;box-shadow:var(--sh);overflow:hidden}
 .dg-court svg{height:100%;width:auto;max-width:100%;display:block;touch-action:manipulation}
 .dg-court svg>rect:first-of-type{rx:0}
-.pl{transition:transform .5s ease}
+#court .pl{transition:transform .5s ease}
 .tap{cursor:pointer}
 .tap circle,.tap rect{animation:dgGlow 1.2s ease-in-out infinite}
 @keyframes dgGlow{50%{fill-opacity:.42}}
@@ -1082,7 +1082,7 @@ body.onsplash .tbar{display:none}
 @media (max-width:420px){.dg-mid{display:none}.dg-score{grid-template-columns:1fr 1fr;gap:12px}}
 @media (max-width:380px){.dg-panel .opts.three .opt{font-size:14.5px}.dg-panel .opt small{font-size:11px}.dg-nm{font-size:13px}}
 @media (max-height:700px){.dg-panel .speak,.dg-panel .hintbtn{width:40px;height:40px}.dg-panel .qrow{min-height:0;padding:10px 12px}.dg-panel .opt{min-height:42px;padding:6px 8px}.dg-panel .opt small{display:none}.dg-score{padding:5px 10px}.dg-pt{font-size:26px}}
-@media (prefers-reduced-motion:reduce){.pl{transition:none}.tap circle,.tap rect{animation:none}}
+@media (prefers-reduced-motion:reduce){#court .pl{transition:none}.tap circle,.tap rect{animation:none}}
 /* trainingen */
 .dg-trs{display:flex;flex-direction:column;gap:8px}
 .dg-tr .ic{background:color-mix(in srgb,var(--tc) 15%,var(--surface));color:var(--tc)}
@@ -1116,6 +1116,17 @@ body.onsplash .tbar{display:none}
 @keyframes bnShadow{0%,100%{transform:scale(1);opacity:.3}50%{transform:scale(.8);opacity:.18}}
 @keyframes bnFade{from{opacity:0}}
 @media (prefers-reduced-motion:reduce){#bignum *{animation:none!important}}
+/* animaties van opzij in de trainingen */
+.dg-scenebox{position:relative;background:var(--blue-soft)}
+.dg-scene{width:100%;height:100%;display:flex;align-items:center;justify-content:center}
+.dg-scene svg{width:100%;height:auto;max-height:100%}
+.dg-scene.ask g.endonly{display:none}
+.dg-scenebox .replay{top:auto;bottom:10px;right:10px}
+.dg-panel .say em{font-style:normal;opacity:.8}
+/* in de spellen staat de tijdelijke shuttleteller linksonder, over Lucky heen, zodat hij geen tekst bedekt */
+.dg-play .potchip{left:max(14px,env(safe-area-inset-left,0px));transform:none;font-size:16px;padding:3px 10px 3px 6px;bottom:calc(10px + env(safe-area-inset-bottom,0px))}
+.dg-play .potchip svg{width:22px;height:22px}
+.dg-play .potchip.out{transform:translateY(14px)}
 /* Spelen-overzicht */
 .dg-games .bn-go[aria-disabled]{filter:grayscale(.6);opacity:.75}
 .dg-trh{font-size:20px;margin-top:4px}
@@ -1284,7 +1295,7 @@ const ic=(n,w)=>I[n].replace('<svg',`<svg width="${w||22}" height="${w||22}"`);
 /* =========================================================
    OPSLAG (per apparaat, per speler)
    ========================================================= */
-const APP_VERSION='1.007';
+const APP_VERSION='1.008';
 const IS_TEST=/-test(\/|$)/i.test(location.pathname)||/^test[.-]/i.test(location.hostname);
 const KEY=IS_TEST?'shuttleschool-test-v1':'shuttleschool-v1';
 if(IS_TEST){document.documentElement.classList.add('envtest');try{document.title='TEST · '+document.title;}catch(e){}}
@@ -2880,6 +2891,7 @@ function render(){ migrateRate(); guard=null;
   setPot(); document.body.classList.toggle('bigtext',!!S.big); tabBar();
   const v=cur.view;
   if(v!=='duel'&&v!=='train') DUEL.stop(); /* wedstrijd of training stopt zodra je het scherm verlaat */
+  document.body.classList.toggle('dg-play',v==='duel'||v==='train');
   document.body.classList.toggle('onsplash',v==='splash');
   if(v==='splash') return splashView();
   if(v==='home') return homeView();
@@ -3427,7 +3439,10 @@ const TRAININGS={
   lijn1:{name:'Lijnrechter',sub:'Enkelspel: in of uit?',topic:'lijnen',icon:'target',target:4,kind:'lijn',mode:'enkel',lv:2},
   lijn2:{name:'Lijnrechter',sub:'Dubbelspel: in of uit?',topic:'lijnen',icon:'people',target:4,kind:'lijn',mode:'dubbel',lv:4},
   vak2:{name:'Vakkenrace',sub:'Dubbelspel: wie, waar en wisselen?',topic:'dubbel',icon:'people',target:6,kind:'vak2',score:true,lv:5},
-  tel1:{name:'Scheidsrechter',sub:'Telling: roep de stand',topic:'telling',icon:'board',target:5,kind:'tel',lv:3}
+  tel1:{name:'Scheidsrechter',sub:'Telling: roep de stand',topic:'telling',icon:'board',target:5,kind:'tel',lv:3},
+  letf:{name:'Let of fout?',sub:'Doorspelen, let of fout?',topic:'fouten',icon:'whistle',target:6,kind:'letf',scene:true,lv:3},
+  svc:{name:'Servicecheck',sub:'Goede service, fout of let?',topic:'service',icon:'eye',target:6,kind:'svc',scene:true,lv:4},
+  gap:{name:'Lege plek',sub:'Speel naar waar de ander niet staat',topic:'spel',icon:'gap',target:5,kind:'gap',lv:2}
 };
 const T_N=12;
 const BLAUW='#2b3bd8', ORANJE='#f07f1a';
@@ -3439,7 +3454,7 @@ const PX=(x,y)=>({x:(x+0.6)*CS,y:(y+L+0.5)*CS});
 function trainSVG(label){
   const g=court({full:true,s:CS,label});
   const m=g.match(/^<svg viewBox="([^"]+)"[^>]*>([\s\S]*)<\/svg>$/);
-  const dyn=`<g transform="scale(${CS}) translate(0.6 ${L+0.5})"><g id="areas"></g><g id="marks"></g><g id="bignum"></g><g id="pls"></g><g id="taps"></g><ellipse id="shd" rx=".2" ry=".08" fill="#0b2a1c" opacity="0"/><g id="sh" opacity="0">${SHUTTLE_INNER}</g></g>`;
+  const dyn=`<g transform="scale(${CS}) translate(0.6 ${L+0.5})"><g id="areas"></g><g id="marks"></g><g id="bignum"></g><g id="pls"></g><g id="taps"></g><ellipse id="shd" rx=".2" ry=".08" fill="#0b2a1c" opacity="0"/><g id="sh" opacity="0">${SHUTTLE_INNER}</g><g id="call" opacity="0" style="transition:opacity .2s"><rect id="callbg" rx=".25" height=".5" fill="#fff" stroke="#1d1d55" stroke-width=".04"/><text id="calltx" text-anchor="middle" font-family="Fredoka,sans-serif" font-weight="700" font-size=".34" fill="#1d1d55"></text></g></g>`;
   return `<svg id="court" viewBox="${m[1]}" role="img" aria-label="${esc(label)}"><defs><clipPath id="lpc"><circle id="lpcc" r="58"/></clipPath></defs>
     <g id="cbase">${m[2]}${dyn}</g>
     <g id="loupe" opacity="0" aria-hidden="true"><line id="lpline" stroke="#fff" stroke-width="3" stroke-dasharray="5 5" stroke-linecap="round"/><circle id="lpdot" r="7" fill="none" stroke="#fff" stroke-width="3"/><circle id="lpsh" r="62" fill="#0b2a1c" opacity=".25"/><g clip-path="url(#lpc)"><rect id="lpbg" width="400" height="400" fill="var(--blue-soft)"/><use href="#cbase" id="lpuse"/></g><circle id="lpring" r="58" fill="none" stroke="#fff" stroke-width="5"/><circle id="lpring2" r="58" fill="none" stroke="#1d1d55" stroke-width="1.5"/></g></svg>`;
@@ -3473,7 +3488,7 @@ function startTraining(id){
     <div class="lhero dg-thero" style="--hc:${TOP[t.topic][1]}"><span class="lh-ic">${I[t.icon]}</span><span class="lh-t"><span class="lh-k" id="tk">Vraag 1 van ${T_N}</span><h2>${t.name} <small>${t.sub.split(':')[0]}</small></h2><span class="lh-bar"><i id="trbar" style="width:0%"></i></span></span>
       <span class="dg-tst"><span class="dg-chip" id="tstreak" title="Reeks: zoveel goed achter elkaar">${I.check}<b>0</b></span><span class="dg-chip" id="tclock" title="Tijd voor de derde ster">${I.clock}<b>0:00</b></span></span></div>
     ${t.score?`<div class="dg-score dg-tscore" aria-live="polite"><div class="dg-side" id="sB"><span class="dg-av dg-team" style="background:${BLAUW}"></span><span class="dg-nm">Blauw</span><span class="dg-sv" aria-label="serveert">${I.shuttle}</span><span class="dg-pt" id="ptB">0</span></div><div class="dg-mid">Stand</div><div class="dg-side r" id="sT"><span class="dg-av dg-team" style="background:${ORANJE}"></span><span class="dg-nm">Oranje</span><span class="dg-sv" aria-label="serveert">${I.shuttle}</span><span class="dg-pt" id="ptT">0</span></div></div>`:''}
-    <div class="dg-court">${trainSVG(t.kind==='vak'||t.kind==='vak2'?'Badmintonbaan met de serveervakken. Blauw staat onderaan, Oranje bovenaan.':'Badmintonbaan van bovenaf. Kijk waar de shuttle landt.')}</div>
+    ${t.scene?`<div class="dg-court dg-scenebox"><div class="dg-scene" id="scn"></div><button class="replay" id="scnre" type="button" aria-label="Animatie opnieuw afspelen" title="Opnieuw afspelen">${I.redo}</button></div>`:`<div class="dg-court">${trainSVG(t.kind==='vak'||t.kind==='vak2'?'Badmintonbaan met de serveervakken. Blauw staat onderaan, Oranje bovenaan.':'Badmintonbaan van bovenaf. Kijk waar de shuttle landt.')}</div>`}
     <div class="stage qstage dg-panel" id="panel" style="--hc:${TOP[t.topic][1]}">
       <div class="qrow" id="qrow"><button class="speak" id="sp" aria-label="Lees voor">${I.speaker}</button><p class="say" id="say"></p><button class="hintbtn" id="hb" aria-label="Hint van Lucky" title="Hint" hidden>${I.bulb}</button></div>
       <div class="dg-hint" id="hint" hidden></div>
@@ -3481,6 +3496,7 @@ function startTraining(id){
     </div></div>`;
   $('stopb').onclick=()=>nav({view:'games'},'back');
   $('sp').onclick=()=>speak(lastSay,$('sp'));
+  if(t.scene) $('scnre').onclick=()=>{ const sv=$('scn').querySelector('svg.pro'); if(sv) try{proAnim(sv);}catch(e){} };
   if(t.kind==='vak2') T.st=dubStart();
   if(t.kind==='tel') T.st=telStart();
   trainLoop().catch(e=>{ if(e!==STOP) console.error(e); });
@@ -3500,7 +3516,7 @@ async function timedChoose(html,opts,o){
 async function trainLoop(){
   while(T.k<T_N){
     tHead();
-    const kd=T.t.kind; const ok=kd==='vak'?await vakRound():kd==='vak2'?await vak2Round():kd==='tel'?await telRound():await lijnRound();
+    const kd=T.t.kind; const ok=kd==='vak'?await vakRound():kd==='vak2'?await vak2Round():kd==='tel'?await telRound():kd==='letf'?await letfRound():kd==='svc'?await svcRound():kd==='gap'?await gapRound():await lijnRound();
     T.res.push(ok);
     if(ok) T.good++;
     T.k++;
@@ -3761,6 +3777,125 @@ async function telRound(){
   return ok;
 }
 
+/* ---------- animaties van opzij (uit de lessen) ---------- */
+function playScene(k,o){
+  const box=$('scn'); box.classList.add('ask');
+  box.innerHTML=k==='dopLos'?dopLosArt():scene(Object.assign({k},o||{}));
+  const sv=box.querySelector('svg.pro');
+  return tw(new Promise(res=>{ if(!sv||RM){ setTimeout(res,RM?150:1200); if(sv&&RM) try{proAnim(sv);}catch(e){} return; }
+    let done=false; const fin=()=>{ if(!done){done=true;res();} }; try{proAnim(sv,fin);}catch(e){fin();} setTimeout(fin,7000); }));
+}
+const reveal=()=>{ const b=$('scn'); if(b) b.classList.remove('ask'); };
+async function sceneQuestion(c,opts,topic,sitTxt,hint){
+  $('ctl').innerHTML=''; $('qrow').hidden=true;
+  ask(`${c.txt} <em>Kijk goed…</em>`,{topic,sit:sitTxt}); $('ctl').innerHTML='';
+  await playScene(c.k,c.o);
+  const v=await timedChoose(`${c.txt} ${c.q}`,opts,{topic,sit:sitTxt,cols:'three',readOpts:true,hint});
+  reveal();
+  return v;
+}
+
+/* ---------- Let of fout? ---------- */
+const LETF=[
+  {k:'touchL',txt:'Blauw speelt bij het net.',a:'fout',why:'Blauw raakt het net. Raak je met je racket, lichaam of kleding het net, dan is dat een fout.'},
+  {k:'underRk',txt:'Blauw staat vlak bij het net.',a:'fout',why:'Blauw komt met zijn racket onder het net door aan de kant van Oranje. Dat is hinderen: een fout.'},
+  {k:'bodyL',txt:'Oranje smasht.',a:'fout',why:'De shuttle raakt het lichaam van Blauw. Dat is een fout van Blauw: punt voor Oranje.'},
+  {k:'tweekeer',txt:'Blauw slaat de shuttle terug.',a:'fout',why:'Blauw raakt de shuttle twee keer achter elkaar. Eén keer raken per kant: dit is een fout.'},
+  {k:'buurbaan',txt:'Er gebeurt iets naast de baan.',a:'let',why:'Er rolt een shuttle van de buurbaan jullie baan op. Iets onverwachts: let. De rally wordt opnieuw gespeeld.'},
+  {k:'afleiden',txt:'Oranje wil serveren.',a:'fout',why:'Blauw roept en zwaait om Oranje af te leiden. Opzettelijk afleiden is een fout.'},
+  {k:'netTerug',txt:'Blauw slaat de shuttle naar het net.',a:'fout',why:'De shuttle raakt de netband en valt terug aan de kant van Blauw. Hij is niet over het net gegaan: fout.'},
+  {k:'serve',o:{zzz:1},txt:'Blauw serveert.',a:'let',why:'Oranje was nog niet klaar en probeerde ook niet terug te slaan. Dan is het let: de service wordt overgedaan.'},
+  {k:'dopLos',txt:'Midden in de rally <strong>schiet het dopje helemaal los</strong> van de shuttle.',a:'let',why:'Komt het dopje helemaal los, dan is het let. Jullie spelen de rally opnieuw.'},
+  {k:'rally',txt:'Midden in de rally <strong>breekt er een veertje</strong>. De shuttle vliegt gewoon door.',a:'door',why:'Een gebroken veertje is géén let en géén fout. Gewoon doorspelen. Alleen als het dopje loskomt, is het let.'},
+  {k:'rally',txt:'De shuttle <strong>raakt het plafond</strong> van de sporthal.',a:'fout',why:'Raakt de shuttle het plafond of een muur, dan is dat een fout van wie hem sloeg.'},
+  {k:'rally',txt:'Tijdens de rally <strong>roept een coach</strong> iets en verstoort het spel.',a:'let',why:'Verstoort een coach het spel, dan is het let. De rally telt niet.'},
+  {k:'rally',txt:'De shuttle raakt tijdens de rally <strong>de netband en valt toch over het net</strong>.',a:'door',why:'Raakt de shuttle tijdens de rally het net en valt hij aan de andere kant, dan is hij gewoon goed. Doorspelen!'},
+  {k:'rally',txt:'Blauw raakt de shuttle aan zijn eigen kant en <strong>zwaait door over het net</strong>, zonder het net te raken.',a:'door',why:'Doorzwaaien over het net mag, als je de shuttle aan je eigen kant raakte en het net niet raakt.'},
+  {k:'serve',txt:'Na de service <strong>blijft de shuttle bovenop het net hangen</strong>.',a:'fout',why:'Blijft de shuttle bij de service op het net hangen, dan is dat een fout van de serveerder.'},
+  {k:'rally',txt:'Na de <strong>terugslag van de service</strong> blijft de shuttle bovenop het net hangen.',a:'let',why:'Blijft de shuttle ná de terugslag van de service op het net hangen, dan is het let.'},
+  {k:'serve',txt:'Serveerder en ontvanger <strong>maken tegelijk een fout</strong> bij de service.',a:'let',why:'Maken serveerder en ontvanger tegelijk een fout, dan is het let.'}
+];
+const LETF_OPTS=[{v:'door',label:'Doorspelen'},{v:'let',label:'Let'},{v:'fout',label:'Fout'}];
+function dealCases(list){ /* elke situatie liefst één keer per ronde */
+  if(!T.deck||!T.deck.length) T.deck=list.map((_,i)=>i).sort(()=>rnd()-.5);
+  return list[T.deck.pop()];
+}
+async function letfRound(){
+  const c=Object.assign({q:'Wat is dit?'},dealCases(LETF));
+  const v=await sceneQuestion(c,LETF_OPTS,'fouten','Doorspelen, let of fout?','Let = opnieuw spelen, er telt niets. Fout = punt voor de ander. Doorspelen = er is niets aan de hand.');
+  const ok=v===c.a;
+  await answerFeedback(ok,`<b>${{door:'Doorspelen',let:'Let',fout:'Fout'}[c.a]}.</b> ${c.why}`);
+  return ok;
+}
+
+/* ---------- Servicecheck ---------- */
+const SVC=[
+  {k:'svcgoed',txt:'Kijk goed naar de service van Blauw.',a:'goed',why:'Blauw raakt de shuttle onder 1,15 meter, de voeten blijven staan en de shuttle gaat omhoog over het net.'},
+  {k:'svchoog',txt:'Kijk goed hoe hoog Blauw de shuttle raakt.',a:'fout',why:'Bij de service moet de hele shuttle onder 1,15 meter zijn als je hem raakt. Deze was te hoog.'},
+  {k:'svcvoet',txt:'Kijk goed naar de voeten van Blauw.',a:'fout',why:'Tijdens de service blijven allebei je voeten op de vloer staan. Blauw schuift met een voet.'},
+  {k:'serve',o:{zzz:1},txt:'Blauw serveert. Let op Oranje!',a:'let',why:'Oranje was nog niet klaar en probeerde niet terug te slaan. Dan wordt de service overgedaan: let.'},
+  {k:'serveKlaar',txt:'Blauw wil serveren.',a:'goed',why:'Blauw wacht tot Oranje klaar is en serveert dan. Zo hoort het.'},
+  {k:'svckort',txt:'Blauw serveert.',a:'goed',why:'Een korte service vlak over het net, die voorbij de korte serveerlijn landt: goed.'},
+  {k:'svclang',txt:'Blauw serveert.',a:'goed',why:'Een lange, hoge service naar achteren: goed.'},
+  {k:'serve',txt:'Blauw raakt bij de service <strong>eerst de veertjes</strong> in plaats van de dop.',a:'fout',why:'Bij de service raakt het racket eerst de dop van de shuttle.'},
+  {k:'serve',txt:'Blauw staat bij de service <strong>met een voet op de middenlijn</strong>.',a:'fout',why:'Bij de service sta je in je vak zonder de lijnen te raken.'},
+  {k:'serve',txt:'Blauw geeft de shuttle bij de service <strong>een draai (spin)</strong>.',a:'fout',why:'Een spinservice is niet toegestaan.'},
+  {k:'serve',txt:'Blauw <strong>mist de shuttle</strong> bij de service helemaal.',a:'fout',why:'Misslaan bij de service is een fout.'},
+  {k:'serve',txt:'Blauw stopt halverwege de service <strong>even met bewegen</strong> en slaat dan pas.',a:'fout',why:'De racketbeweging gaat in één keer door naar voren. Stilvallen telt als vertraging.'},
+  {k:'serve',txt:'Oranje was nog niet klaar, maar <strong>probeert de service toch terug te slaan</strong>.',a:'goed',why:'Wie probeert terug te slaan, was klaar. De service telt gewoon.'},
+  {k:'svcgoed',txt:'Oranje staat bij het ontvangen <strong>met een voet op de lijn</strong>.',a:'fout',why:'Ook de ontvanger mag bij de service de lijnen niet raken. Dit is een fout van Oranje.'}
+];
+const SVC_OPTS=[{v:'goed',label:'Goede service'},{v:'fout',label:'Fout'},{v:'let',label:'Let'}];
+async function svcRound(){
+  const c=Object.assign({q:'Wat vind jij?'},dealCases(SVC));
+  const v=await sceneQuestion(c,SVC_OPTS,'service','Servicecheck','Denk aan: onder 1,15 meter raken, eerst de dop, voeten stil, niet op de lijn, in één beweging. En was de ontvanger klaar?');
+  const ok=v===c.a;
+  await answerFeedback(ok,`<b>${{goed:'Goede service',fout:'Fout',let:'Let'}[c.a]}.</b> ${c.why}`);
+  return ok;
+}
+
+/* ---------- Lege plek ---------- */
+/* zes plekken op de helft van Oranje, gezien vanaf Blauw: voor/midden/achter × links/rechts */
+const GAPZ=[['voor','links',1.45,-1.25],['voor','rechts',W-1.45,-1.25],['midden','links',1.45,-3.6],['midden','rechts',W-1.45,-3.6],['achter','links',1.45,-5.85],['achter','rechts',W-1.45,-5.85]];
+const ZN={voor:'voorin',midden:'in het midden',achter:'achterin'};
+const GAP_SHOT={achter:{hoog:'clear',laag:'lob'},voor:{hoog:'drop',laag:'netdrop'},midden:{hoog:'smash',laag:'drive'}};
+async function gapRound(){
+  const k=T.k; clearMarks(); hideLoupe(); $('taps').innerHTML=''; $('ctl').innerHTML=''; $('qrow').hidden=true;
+  /* Oranje staat ergens; soms netjes in het midden (dan zijn alle hoeken goed) */
+  let op; if(rnd()<.2) op={x:W/2,y:-3.6}; else { const z=pick(GAPZ); op={x:clamp(z[2]+(rnd()-.5)*.8,.9,W-.9),y:clamp(z[3]+(rnd()-.5)*.8,-6.1,-.9)}; }
+  const me={x:W/2+(rnd()-.5)*1.5,y:3.6};
+  placeKids([{id:'O',x:op.x,y:op.y,col:ORANJE,label:'Oranje'},{id:'B',x:me.x,y:me.y,col:BLAUW,label:'Jij'}]);
+  /* de shuttle komt naar jou: hoog (achterin) of laag (voorin) */
+  const high=rnd()<.5, inc={x:me.x+(rnd()-.5)*1.2,y:high?5.4:1.3};
+  ask(`Oranje slaat de shuttle naar jou. Kijk waar Oranje staat…`,{topic:'spel',sit:'Lege plek'}); $('ctl').innerHTML='';
+  await tw(sleep(450)); moveKid('B',{x:inc.x,y:inc.y+.3},700);
+  await tw(fly(op,inc,high?1:.4,850)); restAt(inc,180);
+  const d=GAPZ.map(z=>Math.hypot(z[2]-op.x,z[3]-op.y)), mx=Math.max(...d);
+  const good=GAPZ.map((z,i)=>d[i]>=mx-.55);
+  const v=await timedChoose(`Waar is de <strong>lege plek</strong>? Tik waar Oranje het verst vandaan staat.`,[],{topic:'spel',sit:'Lege plek',
+    hint:'Speel naar waar de ander niet staat: voor of achter, links of rechts. Hoe verder weg, hoe moeilijker voor de ander.',
+    taps:GAPZ.map((z,i)=>({x:z[2],y:z[3],v:i,aria:`${ZN[z[0]]} ${z[1]}`}))});
+  hideShuttle();
+  let ok=good[v]; const z=GAPZ[v], best=GAPZ[good.indexOf(true)];
+  let why=ok?`${(ZN[z[0]]+' '+z[1]).replace(/^./,c=>c.toUpperCase())} is ver weg van Oranje.`:`Daar kan Oranje er makkelijk bij. Beter: <b>${ZN[best[0]]} ${best[1]}</b>${good.filter(Boolean).length>1?' (of een andere hoek ver weg)':''}.`;
+  /* vanaf niveau 3 (en vraag 5): ook de goede slag kiezen */
+  if(ok&&k>=4&&levelOpen(3)){
+    const need=GAP_SHOT[z[0]][high?'hoog':'laag'];
+    const s=await timedChoose(`Goed gezien! Met welke slag krijg je de shuttle ${z[0]==='achter'?'achterin':z[0]==='voor'?'vlak achter het net':'snel in het midden'}? De shuttle komt <strong>${high?'hoog':'laag'}</strong>.`,
+      ORDER.map(x=>({v:x,label:SH[x].n,sub:SH[x].d})),{topic:'slagen',sit:'Welke slag?',cols:'three',readOpts:false,hint:'Komt de shuttle hoog? Dan bovenhands: clear (ver), drop (kort) of smash (hard). Komt hij laag? Dan van onderaf: lob (ver) of netdrop (kort). Midden en vlak: drive.'});
+    ok=s===need;
+    why=ok?`Een <b>${nm(need)}</b> brengt een ${high?'hoge':'lage'} shuttle ${z[0]==='achter'?'achterin':z[0]==='voor'?'voorin':'in het midden'}.`:`De plek was goed, maar een ${nm(s)} brengt de shuttle daar niet. Een ${high?'hoge':'lage'} shuttle naar ${z[0]==='achter'?'achterin':z[0]==='voor'?'voorin':'het midden'}: <b>${nm(need)}</b>.`;
+  }
+  /* laat zien wat er gebeurt */
+  const tgt={x:z[2],y:z[3]}, reach=!good[v];
+  moveKid('O',reach?tgt:{x:op.x+(tgt.x-op.x)*.55,y:op.y+(tgt.y-op.y)*.55},800);
+  await tw(fly({x:inc.x,y:inc.y},tgt,.8,850)); restAt(tgt,0); mark(tgt);
+  callout(tgt,reach?'Oranje is er al':'Punt!',1200);
+  if(reach) GAPZ.forEach((zz,i)=>{ if(good[i]) ring({x:zz[2],y:zz[3]}); }); /* laat zien waar de lege plek wel was */
+  await answerFeedback(ok,why);
+  return ok;
+}
+
 /* ---------- einde van een training ---------- */
 function trainEnd(){
   const t=T.t, id=T.id, good=T.good, inTime=T.time<=t.target*T_N;
@@ -3805,7 +3940,7 @@ function trainEnd(){
 const MATCH_LV=3; /* de wedstrijd gaat open bij niveau 3 */
 const trainOpen=id=>levelOpen(TRAININGS[id].lv);
 function earn(n,el){ if(G) G.earned+=n; award(n,el); }
-const GROUPS=[['service',['vak1','vak2']],['lijnen',['lijn1','lijn2']],['telling',['tel1']]];
+const GROUPS=[['spel',['gap']],['service',['vak1','svc','vak2']],['lijnen',['lijn1','lijn2']],['telling',['tel1']],['fouten',['letf'],'Fouten en let']];
 function lockMsg(m){ toast(m,true); if(S.auto) speak(m); }
 function trainTile(id){
   const t=TRAININGS[id], o=trainOpen(id), r=trainRec(id);
@@ -3822,7 +3957,7 @@ function gamesView(){
     <span class="bn-play">${mo?I.play:I.lock}</span>${lucky('racket','lk-bento')}</button></div>
   <h2 class="dg-trh">Trainingen</h2>
   <p class="note dg-trn">12 vragen per ronde. Alles goed én snel? Dan krijg je 3 sterren.</p>
-  ${GROUPS.map(([tp,ids])=>`<section class="dg-group"${tcol(tp)}><h3 class="dg-grp"><span class="dg-gi">${I[TOPICS[tp].icon]}</span>${TOPICS[tp].name}</h3><div class="dg-trs">${ids.map(trainTile).join('')}</div></section>`).join('')}`;
+  ${GROUPS.map(([tp,ids,nmx])=>`<section class="dg-group"${tcol(tp)}><h3 class="dg-grp"><span class="dg-gi">${I[TOPICS[tp].icon]}</span>${nmx||TOPICS[tp].name}</h3><div class="dg-trs">${ids.map(trainTile).join('')}</div></section>`).join('')}`;
   document.getElementById('dgmatch').onclick=()=>{ if(!mo) return lockMsg(`De wedstrijd gaat open als je bij niveau ${MATCH_LV} bent.`); go({view:'duelset'}); };
   app.querySelectorAll('[data-tr]').forEach(b=>b.onclick=()=>{ const id=b.dataset.tr; if(!trainOpen(id)) return lockMsg(`${TRAININGS[id].name} (${TRAININGS[id].sub.split(':')[0].toLowerCase()}) gaat open als je bij niveau ${TRAININGS[id].lv} bent.`); go({view:'train',id}); });
 }

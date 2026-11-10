@@ -10,6 +10,7 @@
 
 | Versie | Datum | Test | Live | Wat is er nieuw |
 |---|---|---|---|---|
+| 1.008 | 10 nov 2026 | ✓ | – | Drie nieuwe trainingen in Spelen: Lege plek (niveau 2, naar waar de ander niet staat, vanaf niveau 3 ook de juiste slag), Let of fout? (niveau 3, doorspelen/let/fout met de animaties uit de lessen) en Servicecheck (niveau 4, goede service, fout of let). Het antwoord-label in de animaties verschijnt pas na je antwoord. Tijdelijke shuttleteller staat in de spellen linksonder, zodat hij geen uitleg bedekt. |
 | 1.007 | 10 nov 2026 | ✓ | – | Shuttle-duel zit nu in de app. Spelen bevat de wedstrijd tegen Noor, Mo of Lisa (vanaf niveau 3, standaard tot 21) en vijf trainingen die per niveau opengaan: Vakkenrace enkel en Lijnrechter enkel (niveau 2), Scheidsrechter (3), Lijnrechter dubbel (4), Vakkenrace dubbel (5). De oude spelletjes zijn eruit; het niveauscherm toont alleen nog lessen. Sterren van de trainingen staan op Mijn shuttles. |
 | 1.006 | 10 nov 2026 | ✓ | – | Splashscreen: 'Hoe heet je?' gecentreerd; plaatjesknop groter en deels over het naamveld; scherm verschuift niet meer zijwaarts na het kiezen van een plaatje. |
 | 1.005 | 10 nov 2026 | ✓ | – | Splashscreen: de oranje Start-knop is even breed als het naamvak erboven. |
