@@ -548,6 +548,15 @@ body.testmode .tpill{display:inline-block}
 .avedit{position:absolute;right:-4px;bottom:-4px;width:22px;height:22px;border-radius:50%;background:var(--orange);color:#fff;display:grid;place-items:center;box-shadow:0 0 0 2px var(--surface)}
 .avedit svg{width:12px;height:12px}
 .hav svg{box-shadow:0 0 0 2px #ff9a3d}
+/* shuttleteller onderin */
+.tbar .ti{position:relative}
+.tcnt{position:absolute;left:calc(50% + 6px);top:-5px;min-width:22px;height:20px;padding:0 6px;border-radius:999px;background:#ff9a3d;color:#fff;font:700 13px/20px var(--display);font-variant-numeric:tabular-nums;text-align:center;box-shadow:0 0 0 2px var(--surface)}
+.tbar .ti.bump .tcnt,.potchip.bump b{animation:bump .5s}
+.potchip{position:fixed;left:50%;bottom:calc(18px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);z-index:60;display:flex;align-items:center;gap:6px;background:#fff;color:#2b3bd8;border-radius:999px;padding:5px 14px 5px 8px;font:700 20px var(--display);font-variant-numeric:tabular-nums;box-shadow:0 10px 26px -10px rgba(10,20,80,.55);animation:chipIn .25s ease-out;transition:opacity .4s,transform .4s}
+.potchip svg{width:28px;height:28px}
+.potchip.out{opacity:0;transform:translate(-50%,16px)}
+@keyframes chipIn{from{opacity:0;transform:translate(-50%,16px)}to{opacity:1;transform:translateX(-50%)}}
+@media (max-width:560px){.bname{display:none}}
 /* testomgeving: duidelijk anders dan de echte app */
 .envpill{display:none}
 .envtest .brand{position:relative}
@@ -589,7 +598,7 @@ body.testmode .tpill{display:inline-block}
 .hplayer{flex:0 1 auto;min-width:0;display:flex;align-items:center;gap:6px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.25);border-radius:999px;padding:3px 10px 3px 3px;color:#fff;font:inherit;cursor:pointer}
 .hplayer .hav,.hplayer .hav svg{width:30px;height:30px}
 .hname{font-family:var(--display);font-weight:600;font-size:16px;line-height:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:110px}
-@media (max-width:440px){.hname{font-size:15px;max-width:84px}.hplayer{gap:5px;padding-right:8px}}
+@media (max-width:440px){.hname{font-size:15px;max-width:150px}.hplayer{gap:5px;padding-right:8px}}
 @media (max-width:400px){.bname{display:none}}
 /* uitslag */
 .resstage{flex:1 1 auto;min-height:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:clamp(8px,1.8vh,16px);text-align:center;padding:8px 4px}
@@ -908,7 +917,7 @@ body.onsplash .tbar{display:none}
 
 <header class="bar"><div class="bar-in">
   <button class="brand" id="home-btn" aria-label="Naar het begin"><img class="blogo" id="blogo" alt="Luck Raeck"><span class="envpill" aria-label="Testversie">TEST</span><span class="bname">Shuttle-school<span class="tpill">TEST</span></span></button>
-  <button class="hplayer" id="hpl" aria-label="Speler wisselen"><span class="hav" id="hav" aria-hidden="true"></span><span class="hname" id="hname"></span></button><div class="pot" id="pot" aria-label="Gespaarde shuttles"><span id="potico"></span><span id="potn">0</span></div>
+  <button class="hplayer" id="hpl" aria-label="Speler wisselen"><span class="hav" id="hav" aria-hidden="true"></span><span class="hname" id="hname"></span></button>
   <button class="iconbtn" id="set-btn" aria-label="Instellingen"></button>
 </div></header>
 <main id="app"></main>
@@ -1048,14 +1057,14 @@ ICP.grip='<svg viewBox="0 0 48 48" fill="none" stroke-linecap="round" stroke-lin
 ICP.highfive='<svg viewBox="0 0 48 48" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M24 4.5V1M17.5 6l-3-3M30.5 6l3-3" stroke="#f07f1a" stroke-width="2.2"/><g transform="translate(35 42) rotate(-17) scale(-0.78 0.78) translate(-23 -44)"><path d="M15 44V35c-3-2-6-6-7-10-.6-2 1.8-3.2 3.2-1.7L15 27V12.5a2.4 2.4 0 0 1 4.8 0V24V9.5a2.4 2.4 0 0 1 4.8 0V24V11a2.4 2.4 0 0 1 4.8 0v13V14.5a2.4 2.4 0 0 1 4.8 0V32c0 5-3 8-6 9.5V44" fill="#c98a5c" stroke="#1d1d55" stroke-width="2.56" stroke-linejoin="round" stroke-linecap="round"/><rect x="13.5" y="42" width="18" height="9" fill="#f07f1a" stroke="#1d1d55" stroke-width="2.56"/></g><g transform="translate(13 42) rotate(17) scale(0.78) translate(-23 -44)"><path d="M15 44V35c-3-2-6-6-7-10-.6-2 1.8-3.2 3.2-1.7L15 27V12.5a2.4 2.4 0 0 1 4.8 0V24V9.5a2.4 2.4 0 0 1 4.8 0V24V11a2.4 2.4 0 0 1 4.8 0v13V14.5a2.4 2.4 0 0 1 4.8 0V32c0 5-3 8-6 9.5V44" fill="#f6c9a3" stroke="#1d1d55" stroke-width="2.56" stroke-linejoin="round" stroke-linecap="round"/><rect x="13.5" y="42" width="18" height="9" fill="#2b3bd8" stroke="#1d1d55" stroke-width="2.56"/></g></svg>';
 I.camera='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8.5A1.5 1.5 0 0 1 5.5 7h2.3l1.5-2.5h5.4L16.2 7h2.3A1.5 1.5 0 0 1 20 8.5v9a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 4 17.5z" fill="currentColor" fill-opacity=".2"/><circle cx="12" cy="12.8" r="3.4"/></svg>';
 I.image='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="4.5" width="17" height="15" rx="2.5" fill="currentColor" fill-opacity=".2"/><circle cx="9" cy="10" r="1.8"/><path d="M4 17l5-4.5 4 3.5 2.5-2 4.5 3.5"/></svg>';
-document.getElementById('potico').innerHTML=I.shuttle;
+
 document.getElementById('set-btn').innerHTML=I.gear;
 const ic=(n,w)=>I[n].replace('<svg',`<svg width="${w||22}" height="${w||22}"`);
 
 /* =========================================================
    OPSLAG (per apparaat, per speler)
    ========================================================= */
-const APP_VERSION='1.0';
+const APP_VERSION='1.1';
 const IS_TEST=/-test(\/|$)/i.test(location.pathname)||/^test[.-]/i.test(location.hostname);
 const KEY=IS_TEST?'shuttleschool-test-v1':'shuttleschool-v1';
 if(IS_TEST){document.documentElement.classList.add('envtest');try{document.title='TEST · '+document.title;}catch(e){}}
@@ -1166,7 +1175,7 @@ function setPhoto(file){
 }
 function avatarFor(nm){const p=S.profiles[nm];if(p&&p.photo){const id='avp'+(++avUid);return `<svg viewBox="0 0 24 24" role="img" aria-label="Foto van ${esc(nm)}"><defs><clipPath id="${id}"><circle cx="12" cy="12" r="12"/></clipPath></defs><image href="${p.photo}" x="0" y="0" width="24" height="24" preserveAspectRatio="xMidYMid slice" clip-path="url(#${id})"/></svg>`;}return avatar(avIndex(nm));}
 function avatar(i){const a=AVS[i]||AVS[0];const id='avc'+(++avUid);return `<svg viewBox="0 0 100 100" role="img" aria-label="${a.n}"><defs><clipPath id="${id}"><circle cx="50" cy="50" r="50"/></clipPath></defs><g clip-path="url(#${id})"><circle cx="50" cy="50" r="50" fill="${a.bg}"/>${a.g==null?avLuckyG():a.g}</g></svg>`;}
-function setPot(){document.body.classList.toggle('testmode',!!S.testmode);document.getElementById('potn').textContent=P().shuttles;const h=document.getElementById('hav');if(h)h.innerHTML=avatarFor(S.current);const hn=document.getElementById('hname');if(hn){hn.textContent=S.current||'';const b=document.getElementById('hpl');b.hidden=!S.current;b.setAttribute('aria-label','Speler: '+(S.current||'')+'. Tik om te wisselen');}}
+function setPot(){document.body.classList.toggle('testmode',!!S.testmode);{const pn=document.getElementById('potn');if(pn)pn.textContent=P().shuttles;}const h=document.getElementById('hav');if(h)h.innerHTML=avatarFor(S.current);const hn=document.getElementById('hname');if(hn){hn.textContent=S.current||'';const b=document.getElementById('hpl');b.hidden=!S.current;b.setAttribute('aria-label','Speler: '+(S.current||'')+'. Tik om te wisselen');}}
 
 /* =========================================================
    STEM: alleen Nederlandse stemmen, vrouwenstem voorkeur
@@ -2682,7 +2691,7 @@ function tabBar(){
   const show=v==='home'||v==='level'||v==='mijn'||v==='settings'; document.body.classList.toggle('hastbar',show); tb.hidden=!show; if(!show) return;
   const on=v==='home'||(v==='level'&&cur.tab!=='spel')?'home':v==='level'?'spel':v;
   const T=[['home','Thuis',I.home],['spel','Spelen',I.racketd],['mijn','Mijn shuttles',I.shuttle],['settings','Instellingen',I.gear]];
-  tb.innerHTML=T.map(t=>`<button type="button" data-t="${t[0]}" class="${on===t[0]?'on':''}" ${on===t[0]?'aria-current="page"':''}><span class="ti">${t[2]}</span><span class="tl">${t[1]}</span></button>`).join('');
+  tb.innerHTML=T.map(t=>`<button type="button" data-t="${t[0]}" class="${on===t[0]?'on':''}" ${on===t[0]?'aria-current="page"':''}${t[0]==='mijn'?` aria-label="Mijn shuttles: ${P().shuttles}"`:''}><span class="ti">${t[2]}${t[0]==='mijn'?`<b class="tcnt" id="potn">${P().shuttles}</b>`:''}</span><span class="tl">${t[1]}</span></button>`).join('');
   tb.querySelectorAll('[data-t]').forEach(b=>b.onclick=()=>{const t=b.dataset.t; if(t===on&&!(t==='home'&&v!=='home')) return;
     if(t==='home') go({view:'home'},'back');
     else if(t==='spel'){const p=P();const l=LEVELS.find(x=>levelOpen(x.n)&&!p.passed[x.n])||LEVELS[LEVELS.length-1];go({view:'level',n:l.n,tab:'spel'});}
@@ -3048,10 +3057,15 @@ function bonk(){if(S.nosound)return;const a=audioCtx();if(!a)return;try{const t=
 function award(n,el){
   audioCtx(); if(S.testmode){kaching(.6);return;}
   const p=P(); p.shuttles+=n; save();
-  const pot=document.getElementById('pot'); const r=el.getBoundingClientRect(); const t=pot.getBoundingClientRect();
+  /* de shuttles vliegen naar de teller onderin: in de tabbalk, of (tijdens een toets) naar een tijdelijke teller */
+  let pot=document.querySelector('#tbar:not([hidden]) [data-t="mijn"] .ti');
+  if(!pot){ document.querySelectorAll('.potchip').forEach(x=>x.remove()); pot=document.createElement('div'); pot.className='potchip'; pot.setAttribute('aria-hidden','true');
+    pot.innerHTML=`${I.shuttle}<b id="potn">${p.shuttles-n}</b>`; document.body.appendChild(pot);
+    setTimeout(()=>pot.classList.add('out'),1500+n*120); setTimeout(()=>pot.remove(),2000+n*120); }
+  const r=el.getBoundingClientRect(); const t=pot.getBoundingClientRect();
   for(let k=0;k<n;k++){const f=document.createElement('div');f.className='fly';f.innerHTML=I.shuttle;f.style.left=(r.left+r.width/2-17)+'px';f.style.top=(r.top+r.height/2-17)+'px';document.body.appendChild(f);
-    setTimeout(()=>{f.style.transform=`translate(${t.left-r.left-r.width/2+30}px,${t.top-r.top-r.height/2+20}px) scale(.6) rotate(${180+k*40}deg)`;f.style.opacity='.2';},30+k*120);
-    setTimeout(()=>{f.remove();pot.classList.remove('bump');void pot.offsetWidth;pot.classList.add('bump');setPot();kaching(k?.7:1);},900+k*120);}
+    setTimeout(()=>{f.style.transform=`translate(${t.left+t.width/2-r.left-r.width/2}px,${t.top+t.height/2-r.top-r.height/2}px) scale(.6) rotate(${180+k*40}deg)`;f.style.opacity='.2';},30+k*120);
+    setTimeout(()=>{f.remove();pot.classList.remove('bump');void pot.offsetWidth;pot.classList.add('bump');const pn=pot.querySelector('#potn');if(pn)pn.textContent=p.shuttles-n+k+1;kaching(k?.7:1);},900+k*120);}
 }
 function finish(){
   const c=cur, p=P(); const perfect=c.good===c.qs.length; let bonus=0;
