@@ -82,7 +82,7 @@ p{margin:0}
 .stack{display:flex;flex-direction:column;gap:10px}
 .btn{border:0;border-radius:14px;padding:12px 18px;font-family:var(--display);font-weight:600;font-size:18px;background:var(--blue);color:var(--on-accent);display:inline-flex;align-items:center;gap:8px}
 .btn.alt{background:var(--blue-soft);color:var(--blue)}
-.btn.go{background:var(--orange);color:#fff}
+.btn.go{background:var(--orange-btn,#e2650a);color:#fff}
 .btn svg{width:20px;height:20px}
 .btn.small{padding:8px 14px;font-size:16px}
 /* niveaupad */
@@ -548,6 +548,71 @@ body.testmode .tpill{display:inline-block}
 .avedit{position:absolute;right:-4px;bottom:-4px;width:22px;height:22px;border-radius:50%;background:var(--orange);color:#fff;display:grid;place-items:center;box-shadow:0 0 0 2px var(--surface)}
 .avedit svg{width:12px;height:12px}
 .hav svg{box-shadow:0 0 0 2px #ff9a3d}
+/* ---- 1.2: gebruiksgemak ---- */
+:root{--orange-btn:#e2650a}
+.spwarn{margin:2px 0 0;color:#fff;background:#d6453a;border-radius:10px;padding:4px 10px;font-size:14px;font-weight:600}
+.shake{animation:shake .4s}
+@keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-8px)}40%{transform:translateX(7px)}60%{transform:translateX(-5px)}80%{transform:translateX(3px)}}
+.rn[aria-disabled]{cursor:pointer}
+.bn-more{display:inline-block;margin-left:2px;color:var(--blue);font-weight:700}
+/* spelletjes */
+.gacc{display:flex;flex-direction:column;gap:8px}
+.gsec{background:var(--surface);border-radius:20px;box-shadow:0 1px 0 var(--line);overflow:hidden}
+.gs-h{width:100%;display:flex;align-items:center;gap:12px;padding:10px 14px;border:0;background:none;color:var(--fg);font:inherit;text-align:left;cursor:pointer}
+.gs-n{flex:none;width:34px;height:34px;border-radius:50%;background:var(--blue);color:#fff;display:grid;place-items:center;font:700 17px var(--display)}
+.gs-t{flex:1;min-width:0;display:flex;flex-direction:column}.gs-t b{font-family:var(--display);font-size:16px}.gs-t small{color:var(--muted);font-size:13px}
+.gs-i{flex:none;color:var(--muted)}.gs-i svg{width:20px;height:20px}
+.glock .gs-n{background:var(--lock,#aab4cc)}.glock .gs-t b{color:var(--muted)}
+.gsec.on .tiles{padding:0 12px 12px}
+/* mijn shuttles */
+.mh-sub{font-size:13px;opacity:.9;margin-top:2px}
+.mj-tp{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
+.mj-t{display:flex;align-items:center;gap:6px;padding:6px 6px;border-radius:12px;background:color-mix(in srgb,var(--tc) 10%,transparent)}
+.mj-t .tbi{flex:none;width:26px;height:26px;border-radius:8px;background:var(--tc);color:#fff;display:grid;place-items:center}.mj-t .tbi svg{width:16px;height:16px}
+.mj-t.off{background:var(--blue-soft)}.mj-t.off .tbi{background:var(--lock,#aab4cc)}
+.mj-tn{min-width:0;display:flex;flex-direction:column;font:600 12px/1.15 var(--display);color:var(--fg)}
+.mj-st{font-size:11px;letter-spacing:.5px;color:#e8a400}.mj-st i{font-style:normal;color:var(--line,#d5dcef)}
+.mj-av{display:flex;gap:10px;margin:2px 0 4px}
+.mj-a{position:relative;width:44px;height:44px}.mj-a>svg{width:44px;height:44px;border-radius:50%}
+.mj-a:not(.on)>svg{filter:grayscale(1) brightness(1.15) opacity(.5)}
+.mj-bar{margin-top:6px}
+/* spelers beheren */
+.plist{display:flex;flex-direction:column;gap:6px}
+.prow{display:flex;align-items:center;gap:6px;padding:4px;border-radius:16px;background:var(--blue-soft);flex-wrap:wrap}
+.prow.on{background:var(--orange-soft);box-shadow:inset 0 0 0 2px var(--orange)}
+.pp{flex:1;min-width:0;display:flex;align-items:center;gap:8px;border:0;background:none;padding:4px 6px;font:inherit;color:var(--fg);cursor:pointer;text-align:left}
+.pp .cav,.pedit .cav{flex:none;width:34px;height:34px}.pp .cav svg,.pedit .cav svg{width:34px;height:34px;border-radius:50%}
+.pn{flex:1;min-width:0;font:700 17px var(--display);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ps{flex:none;display:flex;align-items:center;gap:3px;font:700 15px var(--display);color:var(--blue)}.ps svg{width:18px;height:18px}
+.pi{flex:none;width:38px;height:38px;border-radius:12px;border:0;background:var(--surface);color:var(--blue);display:grid;place-items:center;cursor:pointer}.pi svg{width:18px;height:18px}
+.pi-d{color:#c23b2b}
+.pedit input{flex:1;min-width:120px}
+.pdq{flex:1 1 100%;padding:4px 6px;font-size:14px}
+.pdel-y{background:#c23b2b;color:#fff}
+.pmsg{margin:0}
+.bwd textarea{width:100%;box-sizing:border-box;font:13px/1.3 ui-monospace,Menlo,monospace;border-radius:12px;border:1px solid var(--line);padding:8px;background:var(--surface);color:var(--fg);word-break:break-all}
+/* schakelaars in de instellingen */
+.swrow{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:6px 0;font-size:15px;color:var(--fg);cursor:pointer}
+.swrow>span,.swl{flex:1;min-width:0}.swrow small{display:block;color:var(--muted);font-size:13px}
+.swlink{font-size:14px;margin-left:4px}
+.swi{appearance:none;-webkit-appearance:none;flex:none;width:50px;height:30px;margin:0;border-radius:999px;background:#c9d1e6;position:relative;cursor:pointer;transition:background .18s}
+.swi::after{content:'';position:absolute;left:3px;top:3px;width:24px;height:24px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,30,.3);transition:transform .18s}
+.swi:checked{background:var(--orange-btn,#e2650a)}.swi:checked::after{transform:translateX(20px)}
+.swi:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+.vers{user-select:none;-webkit-user-select:none;-webkit-touch-callout:none}
+/* rondleiding */
+.tour{position:fixed;inset:0;z-index:90}
+.tour.tr-dim{background:rgba(10,15,60,.62)}
+.tr-spot{position:fixed;border-radius:22px;box-shadow:0 0 0 9999px rgba(10,15,60,.62),0 0 0 3px #ffd34d;pointer-events:none;transition:all .25s}
+.tr-b{position:fixed;left:16px;right:16px;margin:0 auto;max-width:420px;display:flex;align-items:flex-end;gap:6px;animation:sppIn .22s ease-out}
+.tr-b.center{top:50%;transform:translateY(-50%)}
+.lk-tour{flex:none;width:86px;height:auto;filter:drop-shadow(0 8px 8px rgba(0,0,30,.4))}
+.tr-c{flex:1;background:#fff;color:#1d1d55;border-radius:22px;padding:14px 16px 12px;box-shadow:0 16px 40px -14px rgba(0,0,30,.6)}
+.tr-c p{margin:0 0 10px;font:600 17px/1.3 var(--display)}
+.tr-bt{display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+.tr-bt .linkbtn{color:#5a6485}
+.tr-d{display:flex;gap:5px;margin-top:10px}
+.tr-d i{width:7px;height:7px;border-radius:50%;background:#d5dcef}.tr-d i.on{background:#e2650a}
 /* shuttleteller onderin */
 .tbar .ti{position:relative}
 .tcnt{position:absolute;left:calc(50% + 6px);top:-5px;min-width:22px;height:20px;padding:0 6px;border-radius:999px;background:#ff9a3d;color:#fff;font:700 13px/20px var(--display);font-variant-numeric:tabular-nums;text-align:center;box-shadow:0 0 0 2px var(--surface)}
@@ -836,7 +901,7 @@ body.testmode .tpill{display:inline-block}
 .rn-st{position:absolute;top:-8px;right:-8px;width:22px;height:22px;border-radius:50%;background:#ffc23d;color:#7a4b00;font-size:14px;line-height:22px;text-align:center;box-shadow:0 2px 0 rgba(0,0,0,.2)}
 .rn-me{position:absolute;bottom:-6px;left:-12px;width:24px;height:24px;border-radius:50%;overflow:hidden;box-shadow:0 0 0 2px #fff;animation:mebob 1.2s ease-in-out infinite}
 .rn-me svg,.rn-me img{width:100%;height:100%;object-fit:cover}
-.rn-t{font-family:var(--display);font-weight:700;font-size:11.5px;line-height:1.12;text-align:center;text-shadow:0 1px 2px rgba(0,0,0,.45);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;max-width:92%}
+.rn-t{font-family:var(--display);font-weight:700;font-size:11px;line-height:1.1;text-align:center;text-shadow:0 1px 2px rgba(0,0,0,.45);display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;max-width:92%}
 .rn.lock .rn-t{opacity:.75}
 .rn-ex .rn-c{width:52px;height:52px}
 @media (prefers-reduced-motion:reduce){.rn.now .rn-c,.rn-me{animation:none}}
@@ -913,6 +978,19 @@ body.onsplash .tbar{display:none}
 .vm.on{border-color:var(--blue);background:var(--surface);box-shadow:0 3px 0 color-mix(in srgb,var(--blue) 25%,transparent)}
 .vm:has(input:focus-visible){outline:3px solid var(--orange);outline-offset:2px}
 .vmode .btn{align-self:flex-start}
+/* 1.2: compacte opmaak (staat achteraan zodat hij voorgaat) */
+.mijnhero{min-height:0;padding:14px 16px}
+.mh-pot{flex-direction:row;flex-wrap:wrap;align-items:baseline;column-gap:8px}.mh-ic{flex-basis:100%}.mh-n{font-size:40px}.mh-sub{flex-basis:100%}
+.swrow{padding:3px 0}
+@media (max-height:740px){
+  .mh-ic{display:none}.mh-n{font-size:34px}.lk-mijn{width:70px;height:86px}
+  .mj-tp{gap:4px}.mj-t{padding:4px 5px}.mj-t .tbi{width:22px;height:22px}.mj-tn{font-size:11px}
+  .mj-a,.mj-a>svg{width:36px;height:36px}.mj-av{margin:0 0 2px}
+  .mj-dip{max-width:44px}.mj-dip svg{width:24px;height:24px}
+  .bento.mijn{gap:8px}.bento.mijn .bn{padding:10px 12px}
+  .swi{width:44px;height:26px}.swi::after{width:20px;height:20px}.swi:checked::after{transform:translateX(18px)}
+  .swrow{padding:1px 0;font-size:14px}.vbox small{display:none}.vbox{padding:8px 12px}.swrow small{font-size:12px}
+}
 </style>
 
 <header class="bar"><div class="bar-in">
@@ -1064,7 +1142,7 @@ const ic=(n,w)=>I[n].replace('<svg',`<svg width="${w||22}" height="${w||22}"`);
 /* =========================================================
    OPSLAG (per apparaat, per speler)
    ========================================================= */
-const APP_VERSION='1.1';
+const APP_VERSION='1.2';
 const IS_TEST=/-test(\/|$)/i.test(location.pathname)||/^test[.-]/i.test(location.hostname);
 const KEY=IS_TEST?'shuttleschool-test-v1':'shuttleschool-v1';
 if(IS_TEST){document.documentElement.classList.add('envtest');try{document.title='TEST · '+document.title;}catch(e){}}
@@ -1076,6 +1154,8 @@ function save(){try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}}
 function newProfile(){return {shuttles:0,lessons:{},passed:{},best:{},unlock:1,opfris:{},bak:[],passedAt:{}};}
 function P(){
   if(!S.current||!S.profiles[S.current]){ S.profiles['Speler']=S.profiles['Speler']||newProfile(); S.current='Speler'; }
+  /* een lege 'Speler' opruimen zodra er echte spelers zijn */
+  { const sp=S.profiles['Speler']; if(sp&&Object.keys(S.profiles).length>1&&!sp.shuttles&&!Object.keys(sp.lessons||{}).length&&!Object.keys(sp.passed||{}).length){ delete S.profiles['Speler']; if(S.current==='Speler') S.current=Object.keys(S.profiles)[0]; } }
   const p=S.profiles[S.current]; if(!p.lessons) p.lessons={}; if(!p.passed) p.passed={}; if(!p.best) p.best={}; if(!p.unlock) p.unlock=1; if(!p.opfris) p.opfris={}; if(!p.bak) p.bak=[]; if(!p.passedAt) p.passedAt={}; return p;
 }
 /* avatars: twaalf sportieve dieren + vier die je kunt verdienen */
@@ -2677,6 +2757,7 @@ function render(){ migrateRate(); guard=null;
   if(v==='splash') return splashView();
   if(v==='home') return homeView();
   if(v==='level') return levelView(cur.n);
+  if(v==='games') return gamesView();
   if(v==='lesson') return lessonView();
   if(v==='quiz') return quizView();
   if(v==='result') return resultView();
@@ -2688,27 +2769,48 @@ function render(){ migrateRate(); guard=null;
 /* vaste balk onderin: Thuis, Spelen, Mijn shuttles, Instellingen */
 function tabBar(){
   const tb=document.getElementById('tbar'); if(!tb) return; const v=cur.view;
-  const show=v==='home'||v==='level'||v==='mijn'||v==='settings'; document.body.classList.toggle('hastbar',show); tb.hidden=!show; if(!show) return;
-  const on=v==='home'||(v==='level'&&cur.tab!=='spel')?'home':v==='level'?'spel':v;
+  const show=v==='home'||v==='level'||v==='mijn'||v==='settings'||v==='games'; document.body.classList.toggle('hastbar',show); tb.hidden=!show; if(!show) return;
+  const on=v==='home'||(v==='level'&&cur.tab!=='spel')?'home':(v==='level'||v==='games')?'spel':v;
   const T=[['home','Thuis',I.home],['spel','Spelen',I.racketd],['mijn','Mijn shuttles',I.shuttle],['settings','Instellingen',I.gear]];
   tb.innerHTML=T.map(t=>`<button type="button" data-t="${t[0]}" class="${on===t[0]?'on':''}" ${on===t[0]?'aria-current="page"':''}${t[0]==='mijn'?` aria-label="Mijn shuttles: ${P().shuttles}"`:''}><span class="ti">${t[2]}${t[0]==='mijn'?`<b class="tcnt" id="potn">${P().shuttles}</b>`:''}</span><span class="tl">${t[1]}</span></button>`).join('');
   tb.querySelectorAll('[data-t]').forEach(b=>b.onclick=()=>{const t=b.dataset.t; if(t===on&&!(t==='home'&&v!=='home')) return;
     if(t==='home') go({view:'home'},'back');
-    else if(t==='spel'){const p=P();const l=LEVELS.find(x=>levelOpen(x.n)&&!p.passed[x.n])||LEVELS[LEVELS.length-1];go({view:'level',n:l.n,tab:'spel'});}
+    else if(t==='spel') go({view:'games'});
     else if(t==='mijn') go({view:'mijn'});
     else go({view:'settings',tab:'algemeen'});});
+}
+/* Spelen: alle spelletjes, per niveau; het nieuwste open niveau staat open */
+function gamesView(){
+  const p=P(), open=LEVELS.filter(l=>levelOpen(l.n)), top=open.length?open[open.length-1].n:1;
+  const ex=cur.ex||top;
+  const order=open.slice().reverse().concat(LEVELS.filter(l=>!levelOpen(l.n)));
+  app.innerHTML=`
+  <div class="topline"><span class="label">Spelletjes</span><span class="note" style="margin:0">Oefen en spaar shuttles</span></div>
+  <div class="gacc">${order.map(l=>{const o=levelOpen(l.n), gs=gamesFor(l.n), on=o&&l.n===ex;
+    return `<section class="gsec ${o?'':'glock'} ${on?'on':''}">
+      <button class="gs-h" data-gl="${l.n}" aria-expanded="${on}" ${o?'':'aria-disabled="true"'}><span class="gs-n">${l.n}</span><span class="gs-t"><b>Niveau ${l.n} · ${l.name}</b><small>${o?`${gs.length} spelletjes`:'Nog op slot'}</small></span><span class="gs-i">${o?(on?'':I.next):I.lock}</span></button>
+      ${on?`<div class="tiles">${gs.map(g=>`<button class="tile game" data-g="${g.id}" data-gn="${l.n}"><span class="tn">${I[g.icon]}</span><span class="tt">${g.title}<small>${p.best[g.id]!=null?'beste '+p.best[g.id]:g.desc}</small></span></button>`).join('')}</div>`:''}
+    </section>`;}).join('')}</div>`;
+  app.querySelectorAll('[data-gl]').forEach(b=>b.onclick=()=>{const n=+b.dataset.gl;
+    if(b.getAttribute('aria-disabled')){const m=`De spelletjes van niveau ${n} gaan open als je bij niveau ${n} bent.`;toast(m,true);if(S.auto)speak(m);return;}
+    cur.ex=n; render();});
+  app.querySelectorAll('[data-g]').forEach(b=>b.onclick=()=>{const n=+b.dataset.gn, g=gamesFor(n).find(x=>x.id===b.dataset.g);startQuiz({n,title:g.title,kind:'game',gid:g.id,src:g.make});});
 }
 /* Mijn shuttles: spaarpot, sterren per onderwerp en diploma's */
 function mijnView(){
   const p=P(), tot=TOPIC_ORDER.reduce((a,x)=>a+topicStars(x),0), dips=LEVELS.filter(l=>p.passed[l.n]);
   const lessons=LEVELS.reduce((a,l)=>a+lessonsDone(l),0), all=LEVELS.reduce((a,l)=>a+l.lessons.length,0);
+  const nextAv=AVS.map((a,i)=>i).filter(i=>AVS[i].ok&&!avOpen(i,p));
+  const stars=n=>'★'.repeat(n)+'<i>'+'★'.repeat(5-n)+'</i>';
+  const goal=nextAv.map(i=>{const r=AVS[i].req.match(/(\d+) shuttles/);return r?{i,need:+r[1]}:null;}).filter(Boolean).sort((a,b)=>a.need-b.need)[0];
   app.innerHTML=`
-  <div class="mijnhero"><div class="mh-pot"><span class="mh-ic">${I.shuttle}</span><span class="mh-n">${p.shuttles}</span><span class="mh-l">${p.shuttles===1?'shuttle':'shuttles'} gespaard</span></div>${lucky(p.shuttles?'cheer':'happy','lk-mijn')}</div>
+  <div class="mijnhero"><div class="mh-pot"><span class="mh-ic">${I.shuttle}</span><span class="mh-n">${p.shuttles}</span><span class="mh-l">${p.shuttles===1?'shuttle':'shuttles'} gespaard</span><span class="mh-sub">${lessons} van ${all} lessen · ${tot} ★</span></div>${lucky(p.shuttles?'cheer':'happy','lk-mijn')}</div>
   <div class="bento mijn">
-    <div class="bn mj-s"><span class="bn-n">${lessons}<small>/${all}</small></span><span class="bn-l">lessen gehaald</span></div>
-    <div class="bn mj-s"><span class="bn-n">${tot} ★</span><span class="bn-l">sterren</span></div>
-    <div class="bn bn-top mj-w"><span class="bn-h">Sterren per onderwerp</span><div class="tp">${TOPIC_ORDER.map(x=>{const st=topicStars(x);return `<span class="tp-i ${st?'':'off'}"${tcol(x)} title="${TOPICS[x].name}: ${st} van 5 sterren"><span class="tbi">${I[TOPICS[x].icon]}</span><small>${st}★</small></span>`;}).join('')}</div></div>
-    <div class="bn mj-w"><span class="bn-h">Diploma's</span><div class="mj-dips">${LEVELS.map(l=>`<button class="mj-dip ${p.passed[l.n]?'on':''}" data-n="${l.n}" ${p.passed[l.n]?'':'disabled'} aria-label="Diploma niveau ${l.n}${p.passed[l.n]?'':', nog niet gehaald'}">${p.passed[l.n]?I.medal:I.lock}<small>${l.n}</small></button>`).join('')}</div><span class="bn-s">${dips.length?`Tik op een medaille om je diploma te zien.`:'Haal een eindtoets foutloos voor je eerste diploma.'}</span></div>
+    <div class="bn bn-top mj-w"><span class="bn-h">Sterren per onderwerp</span><div class="mj-tp">${TOPIC_ORDER.map(x=>{const st=topicStars(x);return `<div class="mj-t ${st?'':'off'}"${tcol(x)} title="${TOPICS[x].name}: ${st} van 5 sterren"><span class="tbi">${I[TOPICS[x].icon]}</span><span class="mj-tn">${TOPICS[x].name}<span class="mj-st" aria-label="${st} van 5 sterren">${stars(st)}</span></span></div>`;}).join('')}</div></div>
+    <div class="bn mj-w"><span class="bn-h">Plaatjes verdienen</span><div class="mj-av">${AVS.map((a,i)=>a.ok?`<span class="mj-a ${avOpen(i,p)?'on':''}" title="${a.n}: ${avOpen(i,p)?'verdiend':a.req}">${avatar(i)}${avOpen(i,p)?'':`<span class="avlk">${I.lock}</span>`}</span>`:'').join('')}</div>
+      <span class="bn-s">${goal?`Nog <b>${goal.need-p.shuttles}</b> shuttles tot de <b>${AVS[goal.i].n}</b>.`:nextAv.length?`Volgende: ${AVS[nextAv[0]].n} — ${AVS[nextAv[0]].req.toLowerCase()}.`:'Je hebt alle plaatjes verdiend!'}${nextAv.length<4?' Kies ze bij je naam.':''}</span>
+      ${goal?`<span class="bn-bar mj-bar"><i style="width:${Math.min(100,Math.round(p.shuttles/goal.need*100))}%"></i></span>`:''}</div>
+    <div class="bn mj-w"><span class="bn-h">Diploma's</span><div class="mj-dips">${LEVELS.map(l=>`<button class="mj-dip ${p.passed[l.n]?'on':''}" data-n="${l.n}" ${p.passed[l.n]?'':'disabled'} aria-label="Diploma niveau ${l.n}${p.passed[l.n]?'':', nog niet gehaald'}">${p.passed[l.n]?I.medal:I.lock}<small>${l.n}</small></button>`).join('')}</div>${dips.length?`<span class="bn-s">Tik op een medaille om je diploma te zien.</span>`:''}</div>
   </div>`;
   app.querySelectorAll('.mj-dip.on').forEach(b=>b.onclick=()=>go({view:'diploma',n:+b.dataset.n,back:{view:'mijn'}}));
 }
@@ -2736,9 +2838,9 @@ function homeView(){
       <span class="bn-play">${I.play}</span>
       ${lucky(allDone?'cheer':'happy','lk-bento')}
     </button>
-    <button class="bn bn-pot" id="bnpot"><span class="bn-ic">${I.shuttle}</span><span class="bn-n">${p.shuttles}</span><span class="bn-l">${p.shuttles===1?'shuttle':'shuttles'} gespaard</span></button>
+    <button class="bn bn-pot" id="bnpot"><span class="bn-ic">${I.shuttle}</span><span class="bn-n">${p.shuttles}</span><span class="bn-l">${p.shuttles===1?'shuttle':'shuttles'} gespaard <span class="bn-more">bekijk ›</span></span></button>
     ${due?`<button class="bn bn-bak" id="bak"><span class="bn-ic">${I.redo}</span><span class="bn-n">${due}</span><span class="bn-l">in de foutenbak</span></button>`
-         :`<button class="bn bn-game" id="bngame"><span class="bn-ic">${I.racketd}</span><span class="bn-n">${gamesFor(curL.n).length}</span><span class="bn-l">spelletjes</span></button>`}
+         :`<button class="bn bn-game" id="bngame"><span class="bn-ic">${I.racketd}</span><span class="bn-n">${LEVELS.filter(l=>levelOpen(l.n)).reduce((a,l)=>a+gamesFor(l.n).length,0)}</span><span class="bn-l">spelletjes <span class="bn-more">speel ›</span></span></button>`}
     <div class="bn bn-route"><span class="bn-h">Jouw route</span><div class="rt">${LEVELS.map((l,ix)=>{const open=levelOpen(l.n),pass=!!p.passed[l.n],now=l===curL&&!pass;
       return (ix?`<i class="rt-ln ${p.passed[l.n-1]?'on':''}"></i>`:'')+`<button class="rt-st ${pass?'pass':''} ${now?'now':''} ${open?'':'lock'}" data-n="${l.n}" aria-label="Niveau ${l.n}: ${esc(l.name)}${pass?', gehaald':open?'':', op slot'}">${pass?I.check:open?l.n:I.lock}${now?`<span class="rt-me">${avatarFor(S.current)}</span>`:''}</button>`;}).join('')}</div>
       <span class="bn-s">${allDone?'Alle niveaus foutloos gehaald':`Nu: niveau ${curL.n}, ${esc(curL.name)}`}</span></div>
@@ -2746,14 +2848,15 @@ function homeView(){
   </div>
   ${S.auto?voiceWarn():''}`;
   const nb=document.getElementById('next'); if(nb) nb.onclick=()=>{ if(ns) doStep(ns); else go({view:'level',n:5,tab:'spel'}); };
+  if(!S.toured&&!S.testmode) setTimeout(()=>{ if(cur.view==='home'&&!document.querySelector('.tour')) startTour(); },450);
   const bb=document.getElementById('bak'); if(bb) bb.onclick=()=>startQuiz({n:1,title:'Foutenbak',kind:'bak',src:()=>bakDue().slice(0,8).map(b=>b.r)});
-  const bg=document.getElementById('bngame'); if(bg) bg.onclick=()=>go({view:'level',n:curL.n,tab:'spel'});
+  const bg=document.getElementById('bngame'); if(bg) bg.onclick=()=>go({view:'games'});
   const bp=document.getElementById('bnpot'); if(bp) bp.onclick=()=>{kaching(.6);go({view:'mijn'});};
   app.querySelectorAll('.rt-st').forEach(b=>b.onclick=()=>{const n=+b.dataset.n; if(levelOpen(n)) go({view:'level',n,tab:'les'}); else {const m=`Niveau ${n} is nog op slot. Haal eerst niveau ${n-1} foutloos.`; toast(m,true); if(S.auto) speak(m);}});
   const nr=document.getElementById('namerow'), nf=document.getElementById('nameform'), nm=document.getElementById('nm');
   const openEdit=()=>{nr.hidden=true;nf.hidden=false;document.getElementById('avpick').hidden=false;nm.focus();nm.select();};
   document.getElementById('edit').onclick=openEdit; document.getElementById('heroav').onclick=openEdit;
-  app.querySelectorAll('[data-av]').forEach(b=>b.onclick=()=>{ if(b.dataset.req){toast(`${I.lock} ${b.dataset.req} om dit plaatje te krijgen.`,true);return;} const q=P();q.av=+b.dataset.av;delete q.photo;save();setPot();render();});
+  app.querySelectorAll('[data-av]').forEach(b=>b.onclick=()=>{ if(b.dataset.req){toast(`${b.dataset.req} om dit plaatje te krijgen.`,true);return;} const q=P();q.av=+b.dataset.av;delete q.photo;save();setPot();render();});
   ['avlib','avcam'].forEach(id=>{const inp=document.getElementById(id); if(inp) inp.onchange=()=>{const f=inp.files&&inp.files[0]; if(f) setPhoto(f);};});
   const ad=document.getElementById('avdel'); if(ad) ad.onclick=()=>{delete P().photo;save();setPot();render();};
   nf.onsubmit=e=>{e.preventDefault(); const v=nm.value.trim(), old=S.current;
@@ -2785,15 +2888,17 @@ function levelView(n){
   const gn=document.getElementById('gonext'); if(gn) gn.onclick=()=>go({view:'level',n:n+1,tab:'les'});
   const dp=document.getElementById('dipl'); if(dp) dp.onclick=()=>go({view:'diploma',n,back:{view:'level',n,tab:'les'}});
   const op=document.getElementById('opf'); if(op) op.onclick=()=>startQuiz({n,title:`Opfrissen niveau ${n}`,kind:'opfris',src:()=>opfrisFor(n)});
-  app.querySelectorAll('[data-l]').forEach(b=>b.onclick=()=>go({view:'lesson',n,li:+b.dataset.l,i:0}));
-  const ex=document.getElementById('exam'); if(ex) ex.onclick=()=>startQuiz({n,title:`Eindtoets niveau ${n}`,kind:'exam',src:()=>examFor(n)});
+  const why=i=>{ if(i===0&&of) return 'Doe eerst even het opfrissen hierboven. Dan gaat les 1 open.'; let j=0; while(j<l.lessons.length&&p.lessons[l.lessons[j].id]) j++; return `Deze les is nog op slot. Maak eerst les ${j+1} af.`; };
+  const lockMsg=m=>{toast(m,true); if(S.auto) speak(m);};
+  app.querySelectorAll('[data-l]').forEach(b=>b.onclick=()=>{const i=+b.dataset.l; if(b.getAttribute('aria-disabled')){lockMsg(why(i));return;} go({view:'lesson',n,li:i,i:0});});
+  const ex=document.getElementById('exam'); if(ex) ex.onclick=()=>{ if(ex.getAttribute('aria-disabled')){lockMsg('De eindtoets gaat open als je alle lessen van dit niveau hebt gehaald.');return;} startQuiz({n,title:`Eindtoets niveau ${n}`,kind:'exam',src:()=>examFor(n)}); };
   app.querySelectorAll('[data-g]').forEach(b=>b.onclick=()=>{const g=gamesFor(n).find(x=>x.id===b.dataset.g);startQuiz({n,title:g.title,kind:'game',gid:g.id,src:g.make});});
 }
 /* leerpad: een kronkelend pad over een badmintonveld, met een ster bij elke gehaalde les */
 function routeView(l,n,eo,pass){
   const p=P(), items=l.lessons.map((x,i)=>({i,x,open:lessonOpen(l,i),done:!!p.lessons[x.id]})); items.push({exam:true,open:eo,done:pass});
   const nowI=items.findIndex(it=>it.open&&!it.done);
-  const cols=4, RH=(window.innerHeight&&window.innerHeight<720)?76:84, rows=Math.ceil(items.length/cols), H=rows*RH+18;
+  const cols=4, RH=(window.innerHeight&&window.innerHeight<720)?82:92, rows=Math.ceil(items.length/cols), H=rows*RH+18;
   const pos=items.map((_,k)=>{const r=Math.floor(k/cols),c=k%cols,cc=r%2?cols-1-c:c;return [(cc+.5)/cols*100,42+r*RH];});
   let segs='';
   for(let k=0;k<pos.length-1;k++){const [x1,y1]=pos[k],[x2,y2]=pos[k+1];
@@ -2806,7 +2911,7 @@ function routeView(l,n,eo,pass){
     ${items.map((it,k)=>{const [x,y]=pos[k], st=it.done?'done':k===nowI?'now':it.open?'':'lock';
       const lab=it.exam?'Eindtoets':`${it.i+1}. ${it.x.title}`;
       const ico=it.exam?(it.done?I.medal:it.open?ic('medal',26):I.lock):(it.done?I.check:it.open?I[TOPICS[it.x.topic].icon]:I.lock);
-      return `<button class="rn ${st} ${it.exam?'rn-ex':''}" ${it.exam?'id="exam"':`data-l="${it.i}"`} style="left:${x}%;top:${y}px;--tc:${it.exam?'#f0a81a':tc(it.x.topic)}" ${it.open?'':'disabled'} aria-label="${esc(lab)}${it.done?', gehaald':it.open?'':', op slot'}">
+      return `<button class="rn ${st} ${it.exam?'rn-ex':''}" ${it.exam?'id="exam"':`data-l="${it.i}"`} style="left:${x}%;top:${y}px;--tc:${it.exam?'#f0a81a':tc(it.x.topic)}" ${it.open?'':'aria-disabled="true"'} aria-label="${esc(lab)}${it.done?', gehaald':it.open?'':', op slot'}">
         <span class="rn-c">${ico}${it.done?'<span class="rn-st">★</span>':''}${k===nowI?`<span class="rn-me">${avatarFor(S.current)}</span>`:''}</span><span class="rn-t">${esc(lab)}</span></button>`;}).join('')}
   </div>`;
 }
@@ -2853,7 +2958,13 @@ function lessonView(){
   if(i>0) document.getElementById('pv').onclick=()=>go({view:'lesson',n,li,i:i-1},'back');
   const o2=document.getElementById('opf2'); if(o2) o2.onclick=()=>startQuiz({n,title:`Opfrissen niveau ${n}`,kind:'opfris',src:()=>opfrisFor(n)});
   document.getElementById('nx').onclick=()=>{ if(last) startQuiz({n,title:le.title,kind:'lesson',li,src:()=>le.quiz}); else go({view:'lesson',n,li,i:i+1}); };
+  swipeNav(app.querySelector('.lesson-stage'),()=>{ if(!last) go({view:'lesson',n,li,i:i+1}); },()=>{ if(i>0) go({view:'lesson',n,li,i:i-1},'back'); });
 }
+/* vegen tussen uitlegschermen */
+function swipeNav(el,next,prev){ if(!el) return; let x0=null,y0=0,t0=0;
+  el.addEventListener('touchstart',e=>{const t=e.touches[0]; x0=t.clientX; y0=t.clientY; t0=Date.now();},{passive:true});
+  el.addEventListener('touchend',e=>{ if(x0==null) return; const t=e.changedTouches[0], dx=t.clientX-x0, dy=t.clientY-y0; x0=null;
+    if(Math.abs(dx)>60&&Math.abs(dx)>Math.abs(dy)*1.5&&Date.now()-t0<700){ if(dx<0) next(); else prev(); } },{passive:true}); }
 function slideReview(){
   const {n,li,i}=cur; const lv=LEVELS[n-1]; const le=lv.lessons[li]; const sl=le.slides[i];
   const r=revList(), g=r.findIndex(x=>x[0]===n&&x[1]===li&&x[2]===i), tot=r.length;
@@ -3213,21 +3324,72 @@ function svgToPng(svg,w,h){return new Promise((res,rej)=>{const img=new Image();
   img.onload=()=>{const cv=document.createElement('canvas');cv.width=w;cv.height=h;const x=cv.getContext('2d');x.drawImage(img,0,0,w,h);URL.revokeObjectURL(url);cv.toBlob(b=>b?res(b):rej({code:'bad'}),'image/png');};
   img.onerror=()=>rej({code:'bad'}); img.src=url;});}
 
+/* rondleiding bij de eerste keer: Lucky vraagt of hij moet voorlezen en wijst de belangrijkste plekken aan */
+function startTour(){
+  const steps=[];
+  if(!S.autoAsked) steps.push({ask:true,t:`Hoi ${S.current}! Ik ben Lucky. Zal ik alles voor je voorlezen?`});
+  steps.push({sel:'#next',t:'Hier leer je de spelregels, les voor les. Tik op de oranje kaart om te beginnen.'});
+  steps.push({sel:'#tbar [data-t="mijn"]',t:'Bij elk goed antwoord verdien je shuttles. Hier zie je hoeveel je er hebt.'});
+  steps.push({sel:'#tbar [data-t="spel"]',t:'Hier speel je spelletjes. Zo vaak als je wilt!'});
+  const ov=document.createElement('div'); ov.className='tour'; ov.setAttribute('role','dialog'); ov.setAttribute('aria-modal','true'); ov.setAttribute('aria-label','Rondleiding');
+  document.body.appendChild(ov); let k=0;
+  const end=()=>{S.toured=true;S.autoAsked=true;save();hush();ov.remove();};
+  const show=()=>{ const st=steps[k]; hush(); let spot='', pos='center';
+    if(st.sel){ const el=document.querySelector(st.sel); if(el){ const r=el.getBoundingClientRect(); const pad=6;
+      spot=`<div class="tr-spot" style="left:${r.left-pad}px;top:${r.top-pad}px;width:${r.width+pad*2}px;height:${r.height+pad*2}px"></div>`; pos=r.top>innerHeight/2?'above':'below';
+      var top=pos==='below'?r.bottom+18:null, bot=pos==='above'?innerHeight-r.top+18:null; } }
+    const last=k===steps.length-1;
+    ov.className='tour'+(st.sel?'':' tr-dim');
+    ov.innerHTML=`${spot}<div class="tr-b ${pos}" style="${top!=null?`top:${top}px`:''}${bot!=null?`bottom:${bot}px`:''}">${lucky(st.ask?'happy':last?'cheer':'hint','lk-tour')}<div class="tr-c"><p>${esc(st.t)}</p>
+      ${st.ask?`<div class="tr-bt"><button class="btn go small" id="tya">${I.speaker} Ja, lees voor</button><button class="btn alt small" id="tno">Nee, ik lees zelf</button></div>`
+      :`<div class="tr-bt"><button class="btn go small" id="tnx">${last?'Aan de slag!':'Volgende'}</button>${last?'':'<button class="linkbtn" id="tsk">Overslaan</button>'}</div>`}
+      <span class="tr-d">${steps.map((_,j)=>`<i class="${j===k?'on':''}"></i>`).join('')}</span></div></div>`;
+    const nx=()=>{k++; if(k>=steps.length) end(); else show();};
+    const ya=ov.querySelector('#tya'); if(ya) ya.onclick=()=>{S.auto=true;S.autoAsked=true;save();nx();};
+    const no=ov.querySelector('#tno'); if(no) no.onclick=()=>{S.auto=false;S.autoAsked=true;save();nx();};
+    const tn=ov.querySelector('#tnx'); if(tn){ tn.onclick=nx; tn.focus(); }
+    const sk=ov.querySelector('#tsk'); if(sk) sk.onclick=end;
+    if(S.auto||st.ask) speak(st.t);
+  };
+  show();
+}
+
+/* bewaarcode: voortgang van één speler als tekst, om over te zetten naar een ander apparaat */
+async function makeSaveCode(nm){ const q=Object.assign({},S.profiles[nm]); delete q.photo; const json=JSON.stringify({v:1,n:nm,p:q});
+  const b64=u=>{let s='';u.forEach(c=>s+=String.fromCharCode(c));return btoa(s).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');};
+  try{ if(typeof CompressionStream!=='undefined'){ const cs=new Blob([json]).stream().pipeThrough(new CompressionStream('deflate-raw')); const buf=new Uint8Array(await new Response(cs).arrayBuffer()); return 'LR2-'+b64(buf); } }catch(e){}
+  return 'LR1-'+b64(new TextEncoder().encode(json)); }
+async function readSaveCode(code){ try{ code=(code||'').replace(/\s+/g,''); const m=code.match(/^LR([12])-([A-Za-z0-9_-]+)$/); if(!m) return null;
+  const bin=atob(m[2].replace(/-/g,'+').replace(/_/g,'/')); const u=new Uint8Array(bin.length); for(let i=0;i<bin.length;i++) u[i]=bin.charCodeAt(i);
+  let json; if(m[1]==='2'){ const ds=new Blob([u]).stream().pipeThrough(new DecompressionStream('deflate-raw')); json=await new Response(ds).text(); } else json=new TextDecoder().decode(u);
+  const o=JSON.parse(json); if(!o||!o.n||!o.p||typeof o.p!=='object') return null; const base=newProfile(); return {n:String(o.n).slice(0,20),p:Object.assign(base,o.p)}; }catch(e){ return null; } }
+
 /* ---------- Instellingen ---------- */
 function settingsView(){
   loadVoices(); const chosen=pickVoice(); const p=P(); const tab=cur.tab||'algemeen';
   const nlSorted=voices.slice().sort((a,b)=>rankVoice(b)-rankVoice(a));
   const opts=S.allv?nlSorted.concat(allVoices.filter(v=>!/^nl/i.test(v.lang)).sort((a,b)=>a.lang.localeCompare(b.lang)||a.name.localeCompare(b.name))):nlSorted;
   let body='';
-  if(tab==='spelers') body=`
+  if(tab==='spelers'){ const ed=cur.edit, dl=cur.del;
+    body=`
     <p class="note">Wie speelt er? Tik op je naam.</p>
-    <div class="profiles">${Object.keys(S.profiles).map(nm=>`<button class="chip ${nm===S.current?'on':''}" data-p="${esc(nm)}"><span class="cav">${avatarFor(nm)}</span>${esc(nm)} · ${S.profiles[nm].shuttles}</button>`).join('')}</div>
-    <form class="row" id="pf"><label for="pn" class="note">Nieuwe speler</label><input type="text" id="pn" maxlength="20" placeholder="Voornaam"><button class="btn alt small" type="submit">Toevoegen</button></form>`;
+    <div class="plist">${Object.keys(S.profiles).map(nm=>{const q=S.profiles[nm], e=esc(nm);
+      if(ed===nm) return `<form class="prow pedit" id="rnf"><span class="cav">${avatarFor(nm)}</span><input type="text" id="rnn" maxlength="20" value="${e}" aria-label="Nieuwe naam voor ${e}"><button class="btn go small" type="submit">Bewaar</button><button class="btn alt small" type="button" id="rnx">Annuleer</button></form><p class="note pmsg" id="rnm" role="status"></p>`;
+      if(dl===nm) return `<div class="prow pdel"><span class="pdq"><b>${e} verwijderen?</b> Alle voortgang, shuttles en plaatjes van ${e} verdwijnen van dit apparaat.</span><button class="btn small pdel-y" id="dly">Ja, verwijder</button><button class="btn alt small" id="dln">Nee</button></div>`;
+      return `<div class="prow ${nm===S.current?'on':''}"><button class="pp" data-p="${e}" aria-label="Speel als ${e}${nm===S.current?', speelt nu':''}"><span class="cav">${avatarFor(nm)}</span><span class="pn">${e}</span><span class="ps">${q.shuttles} ${I.shuttle}</span></button><button class="pi" data-pe="${e}" aria-label="Naam van ${e} aanpassen">${I.pencil}</button><button class="pi pi-d" data-pd="${e}" aria-label="${e} verwijderen">${I.cross}</button></div>`;}).join('')}</div>
+    <form class="row" id="pf"><label for="pn" class="note">Nieuwe speler</label><input type="text" id="pn" maxlength="20" placeholder="Voornaam"><button class="btn alt small" type="submit">Toevoegen</button></form>
+    <details class="vdet bwd" ${cur.bw?'open':''} id="bwd"><summary>Voortgang overzetten naar een ander apparaat</summary><div class="stack">
+      <p class="note">Maak een bewaarcode en stuur die naar jezelf, bijvoorbeeld via WhatsApp of mail. Plak de code op het andere apparaat hieronder in.</p>
+      <div class="row" style="flex-wrap:wrap"><button class="btn alt small" id="bwmk">Bewaarcode van ${esc(S.current)}</button></div>
+      <div id="bwout" hidden class="stack"><textarea id="bwc" readonly rows="3" aria-label="Bewaarcode"></textarea><div class="row" style="flex-wrap:wrap"><button class="btn go small" id="bwcp">Kopieer</button><button class="btn alt small" id="bwsh" hidden>Delen</button></div></div>
+      <label for="bwin" class="note">Bewaarcode invoeren</label><textarea id="bwin" rows="2" placeholder="Plak hier de code (begint met LR)"></textarea>
+      <div class="row"><button class="btn alt small" id="bwld">Zet over</button></div><p class="note" id="bwm" role="status"></p>
+    </div></details>`; }
   if(tab==='algemeen') body=`
-    <label class="row note"><input type="checkbox" id="au" ${S.auto?'checked':''}> Vragen en uitleg automatisch voorlezen</label>
-    <label class="row note"><input type="checkbox" id="snd" ${S.nosound?'':'checked'}> Appgeluiden (kassageluid en foutgeluid)</label>
-    <label class="row note"><input type="checkbox" id="bg" ${S.big?'checked':''}> Grotere letters</label>
-    <div class="row"><label class="row note"><input type="checkbox" id="sps" ${S.nosplash?'':'checked'}> Openingsscherm tonen bij het starten</label><button class="btn alt small" id="spv">Bekijk</button></div>
+    <label class="swrow"><span>Vragen en uitleg automatisch voorlezen</span><input type="checkbox" class="swi" id="au" ${S.auto?'checked':''}></label>
+    <label class="swrow"><span>Appgeluiden <small>kassageluid en foutgeluid</small></span><input type="checkbox" class="swi" id="snd" ${S.nosound?'':'checked'}></label>
+    <label class="swrow"><span>Grotere letters</span><input type="checkbox" class="swi" id="bg" ${S.big?'checked':''}></label>
+    <div class="swrow"><label for="sps" class="swl">Openingsscherm <button type="button" class="linkbtn swlink" id="spv">bekijk</button></label><input type="checkbox" class="swi" id="sps" ${S.nosplash?'':'checked'}></div>
     <div class="vbox"><div class="vb-t"><b>Voorleesstem: Maarten</b><small>Alle uitleg en vragen zijn door hem ingesproken.</small></div><button class="btn go small" id="vmhear" type="button">${I.speaker} Luister</button></div>
     <label for="rt" class="note">Voorleessnelheid: <span id="rtv">${S.rate.toFixed(2)}</span></label>
     <input type="range" id="rt" min="0.6" max="1.2" step="0.05" value="${S.rate}">
@@ -3238,7 +3400,7 @@ function settingsView(){
     <div class="row"><button class="btn go small" id="hear">${I.speaker} Luister</button><button class="btn alt small" id="rescan">Opnieuw zoeken</button></div>`
     :`<div class="warn">Geen Nederlandse stem gevonden. iPad/iPhone: Instellingen › Toegankelijkheid › Gesproken materiaal › Stemmen › Nederlands › Claire. Windows: Instellingen › Tijd en taal › Spraak › stem toevoegen › Nederlands.</div><div><button class="btn alt small" id="rescan">Opnieuw zoeken</button></div>`)+`
     <p class="note">Dit apparaat geeft ${allVoices.length} ${allVoices.length===1?'stem':'stemmen'} door aan de app, waarvan ${voices.length} Nederlands. Siri-stemmen geeft Apple niet door aan websites.</p>
-    <label class="row note"><input type="checkbox" id="allv" ${S.allv?'checked':''}> Toon ook stemmen in andere talen <span class="muted">(die lezen Nederlands met een accent)</span></label>
+    <label class="swrow"><span>Toon ook stemmen in andere talen <small>die lezen Nederlands met een accent</small></span><input type="checkbox" class="swi" id="allv" ${S.allv?'checked':''}></label>
     </div></details>`;
   if(tab==='ouders') body=`
     <h3>Voor ouders</h3>
@@ -3247,7 +3409,7 @@ function settingsView(){
     <p class="small"><b>Hulp:</b> met de oranje luidspreker laat je elke tekst voorlezen (of zet automatisch voorlezen aan bij Algemeen), en het gloeilampje geeft een hint zonder het antwoord te verklappen. Foute vragen komen later terug in de foutenbak.</p>
     <p class="small"><b>Als app op je telefoon of tablet:</b> open de Shuttle-school in Safari (iPhone/iPad) of Chrome (Android). Kies <b>Deel › Zet op beginscherm</b> of <b>⋮ › App installeren</b>. Daarna start je de app met het shuttle-icoon, ook zonder internet.</p>
     <p class="small"><b>Gegevens:</b> voortgang, shuttles en een eventuele foto van je kind staan alleen op dit apparaat, per voornaam. Er gaat niets naar de club of naar internet.</p>
-    <p class="small muted">Versie ${APP_VERSION}${IS_TEST?' · testversie':''}</p>`;
+    <p class="small muted vers" id="vers">Versie ${APP_VERSION}${IS_TEST?' · testversie':''} · trainer? houd dit vast</p>`;
   if(tab==='trainer'){
     if(!trainerOk) body=`<form class="row" id="tf"><label for="tc" class="note">Trainerscode</label><input type="password" id="tc" autocomplete="off" style="width:150px"><button class="btn alt small" type="submit">Open</button></form><p class="note" id="tmsg" role="status"></p>`;
     else body=`
@@ -3264,11 +3426,32 @@ function settingsView(){
   }
   app.innerHTML=`
   <div class="topline"><button class="back" id="bk">${I.back} Terug</button><span class="label">Instellingen</span></div>
-  <div class="tabs" role="tablist">${[['algemeen','Algemeen'],['spelers','Spelers'],['ouders','Ouders'],['trainer','Trainer']].map(([k,t])=>`<button role="tab" class="tab ${tab===k?'on':''}" data-tab="${k}" aria-selected="${tab===k}">${t}</button>`).join('')}</div>
+  <div class="tabs" role="tablist">${[['algemeen','Algemeen'],['spelers','Spelers'],['ouders','Ouders']].concat(S.trtab||trainerOk||tab==='trainer'?[['trainer','Trainer']]:[]).map(([k,t])=>`<button role="tab" class="tab ${tab===k?'on':''}" data-tab="${k}" aria-selected="${tab===k}">${t}</button>`).join('')}</div>
   <div class="card stack">${body}</div>`;
   document.getElementById('bk').onclick=()=>goBack();
   app.querySelectorAll('[data-tab]').forEach(b=>b.onclick=()=>{cur.tab=b.dataset.tab;render();});
   app.querySelectorAll('[data-p]').forEach(b=>b.onclick=()=>{S.current=b.dataset.p;save();render();});
+  app.querySelectorAll('[data-pe]').forEach(b=>b.onclick=()=>{cur.edit=b.dataset.pe;cur.del=null;render();const i=document.getElementById('rnn');if(i){i.focus();i.select();}});
+  app.querySelectorAll('[data-pd]').forEach(b=>b.onclick=()=>{cur.del=b.dataset.pd;cur.edit=null;render();});
+  const rnx=document.getElementById('rnx'); if(rnx) rnx.onclick=()=>{cur.edit=null;render();};
+  const rnf=document.getElementById('rnf'); if(rnf) rnf.onsubmit=e=>{e.preventDefault(); const old=cur.edit, v=document.getElementById('rnn').value.trim();
+    if(!v||v===old){cur.edit=null;render();return;}
+    if(S.profiles[v]){document.getElementById('rnm').textContent=`De naam ${v} bestaat al. Kies een andere naam.`;return;}
+    S.profiles[v]=S.profiles[old]; delete S.profiles[old]; if(S.current===old) S.current=v; cur.edit=null; save(); render(); toast(`${esc(old)} heet nu ${esc(v)}.`,true);};
+  const dln=document.getElementById('dln'); if(dln) dln.onclick=()=>{cur.del=null;render();};
+  const dly=document.getElementById('dly'); if(dly) dly.onclick=()=>{const nm=cur.del; delete S.profiles[nm]; cur.del=null;
+    if(S.current===nm){ const rest=Object.keys(S.profiles); if(rest.length){S.current=rest[0];} else {S.current=null; save(); go({view:'splash'}); return;} }
+    save(); render(); toast(`${esc(nm)} is verwijderd.`,true);};
+  const bwd=document.getElementById('bwd'); if(bwd) bwd.ontoggle=()=>{cur.bw=bwd.open;};
+  const bwmk=document.getElementById('bwmk'); if(bwmk) bwmk.onclick=async()=>{ const code=await makeSaveCode(S.current); const o=document.getElementById('bwout'); o.hidden=false; const t=document.getElementById('bwc'); t.value=code; t.select();
+    const sh=document.getElementById('bwsh'); if(navigator.share){sh.hidden=false; sh.onclick=()=>navigator.share({title:'Bewaarcode Shuttle-school',text:code}).catch(()=>{});} };
+  const bwcp=document.getElementById('bwcp'); if(bwcp) bwcp.onclick=async()=>{const t=document.getElementById('bwc'); try{await navigator.clipboard.writeText(t.value); bwcp.textContent='Gekopieerd ✓';}catch(e){t.select(); try{document.execCommand('copy'); bwcp.textContent='Gekopieerd ✓';}catch(e2){bwcp.textContent='Selecteer en kopieer zelf';}}};
+  const bwld=document.getElementById('bwld'); if(bwld) bwld.onclick=async()=>{ const m=document.getElementById('bwm'); const r=await readSaveCode(document.getElementById('bwin').value);
+    if(!r){m.textContent='Deze code klopt niet. Kopieer hem nog eens helemaal.';return;}
+    if(S.profiles[r.n]&&bwld.dataset.ok!==r.n){bwld.dataset.ok=r.n; bwld.textContent=`Ja, overschrijf ${r.n}`; m.textContent=`Er is al een speler ${r.n} op dit apparaat. Nog een keer tikken overschrijft die voortgang.`;return;}
+    const old=S.profiles[r.n]; if(old&&old.photo&&!r.p.photo) r.p.photo=old.photo; S.profiles[r.n]=r.p; S.current=r.n; save(); cur.bw=false; render(); toast(`Voortgang van ${esc(r.n)} staat nu op dit apparaat.`,true);};
+  const vr=document.getElementById('vers'); if(vr){ let tm=null; const st=()=>{tm=setTimeout(()=>{S.trtab=true;save();cur.tab='trainer';render();toast('Trainer-tab staat aan.',true);},1600);}; const en=()=>clearTimeout(tm);
+    vr.addEventListener('pointerdown',st); ['pointerup','pointerleave','pointercancel'].forEach(ev=>vr.addEventListener(ev,en)); vr.addEventListener('contextmenu',e=>e.preventDefault()); }
   const pf=document.getElementById('pf'); if(pf) pf.onsubmit=e=>{e.preventDefault();const nm=document.getElementById('pn').value.trim();if(!nm)return;S.profiles[nm]=S.profiles[nm]||newProfile();S.current=nm;save();render();};
   const vmh=document.getElementById('vmhear'); if(vmh) vmh.onclick=()=>{const a='Bij badminton sla je de shuttle met je racket over het net naar de ander.', b='De ander slaat hem terug.'; const its=[{t:a,w:'m'},{t:b,w:'m'}]; if(!playClips(its,vmh)) speakSynth(a+' '+b,vmh);};
   const vs=document.getElementById('vs'); if(vs) vs.onchange=()=>{S.voice=opts[+vs.value].name;save();speak('Hoi! Zal ik jou de spelregels van badminton uitleggen?',null,opts[+vs.value]);};
@@ -3369,7 +3552,7 @@ function splashView(){
     else if(nm&&S.profiles[nm]) h=avatarFor(nm);
     if(h){spav.innerHTML=h+`<span class="spav-e" aria-hidden="true">${I.pencil}</span>`;spav.classList.remove('empty');}
     else {spav.innerHTML=`<span class="spav-0">${I.camera}</span><span class="spav-e" aria-hidden="true">+</span>`;spav.classList.add('empty');}};
-  drawAv(); spn.addEventListener('input',()=>{if(!pick)drawAv();});
+  drawAv(); spn.addEventListener('input',()=>{if(!pick)drawAv(); const w=document.getElementById('spwarn'); if(w) w.remove();});
   const openPk=o=>{pk.hidden=!o;spav.setAttribute('aria-expanded',o?'true':'false');if(o){pm.textContent='';const f=pk.querySelector('button[data-spav]');if(f)f.focus();}};
   spav.onclick=()=>openPk(pk.hidden); document.getElementById('sppx').onclick=()=>openPk(false);
   const spProf=()=>{const nm=spn.value.trim();return nm&&S.profiles[nm]?S.profiles[nm]:null;};
@@ -3378,11 +3561,12 @@ function splashView(){
   pk.querySelectorAll('[data-spav]').forEach(b=>b.onclick=()=>{ if(b.dataset.req){pm.textContent=`🔒 ${AVS[+b.dataset.spav].n}: ${b.dataset.req} om dit plaatje te krijgen.`;return;} pick={av:+b.dataset.spav};drawAv();openPk(false);});
   ['splib','spcam'].forEach(id=>{const inp=document.getElementById(id); inp.onchange=()=>{const f=inp.files&&inp.files[0]; if(!f) return; pm.textContent='Foto wordt klaargezet…';
     cropPhoto(f,d=>{pick={photo:d};drawAv();openPk(false);},()=>{pm.textContent='Deze foto lukt niet. Probeer een andere foto.';});};});
-  const ss=document.getElementById('spsnd'); ss.onclick=()=>{S.auto=!S.auto;save();ss.classList.toggle('on',S.auto);ss.setAttribute('aria-checked',S.auto?'true':'false'); if(S.auto) kaching(.5);};
+  const ss=document.getElementById('spsnd'); ss.onclick=()=>{S.auto=!S.auto;S.autoAsked=true;save();ss.classList.toggle('on',S.auto);ss.setAttribute('aria-checked',S.auto?'true':'false'); if(S.auto) kaching(.5);};
   const applyPick=()=>{ if(!pick||!S.current) return; const q=P();
     if(pick.av!=null){q.av=pick.av;delete q.photo;save();return;}
     const old=q.photo; q.photo=pick.photo; try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){ if(old) q.photo=old; else delete q.photo; } };
-  const startNow=()=>{hush(); choosePlayer(spn.value); applyPick(); if(cur.from==='settings'){go({view:'settings',tab:'algemeen'},'back');return;} if(!openFromHash()) go({view:'home'});};
+  const startNow=()=>{hush(); if(!spn.value.trim()){ const f=document.getElementById('spform'); pm.textContent=''; let w=document.getElementById('spwarn'); if(!w){w=document.createElement('p');w.id='spwarn';w.className='spwarn';w.setAttribute('role','alert');f.appendChild(w);} w.textContent='Vul eerst je voornaam in.'; f.classList.remove('shake'); void f.offsetWidth; f.classList.add('shake'); spn.focus(); if(S.auto) speak('Vul eerst je voornaam in.'); return; }
+    choosePlayer(spn.value); applyPick(); if(cur.from==='settings'){go({view:'settings',tab:'algemeen'},'back');return;} if(!openFromHash()) go({view:'home'});};
   document.getElementById('start').onclick=startNow;
   document.getElementById('spform').onsubmit=e=>{e.preventDefault(); startNow();};
   document.getElementById('nosplash').onchange=e=>{S.nosplash=e.target.checked;save();};
