@@ -832,7 +832,7 @@ body.testmode .tpill{display:inline-block}
 .splash2 .spname input{width:100%;height:52px;border-radius:18px;border:0;box-shadow:inset 0 0 0 2px rgba(255,255,255,.9),0 6px 14px -8px rgba(0,0,30,.6);font-size:19px}
 .splash2 .spname input:focus{outline:3px solid #ff9a3d;outline-offset:2px}
 .lk-splash{position:absolute;right:-10px;top:-86px;width:110px;height:138px;pointer-events:none}
-.splash2 .bigbtn.start{border-radius:24px;box-shadow:0 14px 30px -12px rgba(240,127,26,.85),inset 0 1px 0 rgba(255,255,255,.35)}
+.splash2 .bigbtn.start{width:min(100%,360px);box-sizing:border-box;margin-inline:auto;border-radius:24px;box-shadow:0 14px 30px -12px rgba(240,127,26,.85),inset 0 1px 0 rgba(255,255,255,.35)}
 .splash2 .sprow{gap:8px}
 .splash2 .sprow label,.splash2 .linkbtn{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.22);border-radius:999px;padding:6px 12px;font-size:13px}
 .splash2 .sprow input[type=checkbox]{accent-color:#ff9a3d}
@@ -1142,7 +1142,7 @@ const ic=(n,w)=>I[n].replace('<svg',`<svg width="${w||22}" height="${w||22}"`);
 /* =========================================================
    OPSLAG (per apparaat, per speler)
    ========================================================= */
-const APP_VERSION='1.004';
+const APP_VERSION='1.005';
 const IS_TEST=/-test(\/|$)/i.test(location.pathname)||/^test[.-]/i.test(location.hostname);
 const KEY=IS_TEST?'shuttleschool-test-v1':'shuttleschool-v1';
 if(IS_TEST){document.documentElement.classList.add('envtest');try{document.title='TEST · '+document.title;}catch(e){}}
