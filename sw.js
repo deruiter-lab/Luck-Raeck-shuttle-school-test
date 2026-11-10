@@ -1,5 +1,5 @@
 /* Shuttle-school: werkt ook zonder internet na het eerste bezoek */
-const VER='20261110194925';
+const VER='20261110194926';
 /* test en productie draaien op hetzelfde domein: elk houdt zijn eigen caches */
 const PRE=/-test\//i.test(self.registration.scope)?'shuttle-test-':'shuttle-school-';
 const CACHE=PRE+VER;

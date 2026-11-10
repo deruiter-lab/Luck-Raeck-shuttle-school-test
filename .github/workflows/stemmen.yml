@@ -17,6 +17,13 @@ jobs:
           AZURE_SPEECH_KEY: ${{ secrets.AZURE_SPEECH_KEY }}
           AZURE_SPEECH_REGION: ${{ secrets.AZURE_SPEECH_REGION }}
         run: python3 stemmen/maak.py
+      - name: Opnames bewaren als reservekopie
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: opnames-maarten
+          path: audio/m2/
+          retention-days: 7
       - name: Opnames opslaan
         run: |
           git config user.name "stemmen-bot"
@@ -24,5 +31,8 @@ jobs:
           git add audio/m2
           git diff --cached --quiet && exit 0
           git commit -m "Nieuwe opnames van Maarten"
-          git pull --rebase
-          git push
+          for i in 1 2 3 4 5 6; do
+            git pull --rebase -X theirs origin main && git push origin HEAD:main && exit 0
+            sleep $((i*10))
+          done
+          exit 1

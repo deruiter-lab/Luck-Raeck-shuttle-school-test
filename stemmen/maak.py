@@ -10,7 +10,8 @@ rows=[l.rstrip('\r\n').lstrip('﻿').split('\t',1) for l in open('stemmen/nieuw.
 todo=[(h,t) for h,t in rows if not os.path.exists(os.path.join(D,h+'.mp3'))]
 print(f'{len(rows)} teksten, {len(todo)} nog in te spreken')
 for n,(h,t) in enumerate(todo,1):
-    ssml=f"<speak version='1.0' xmlns='http://www.w3.org/2001/10/synthesis' xml:lang='nl-NL'><voice name='nl-NL-MaartenNeural'><prosody rate='-6%'>{escape(t)}</prosody></voice></speak>"
+    say=t.replace(' = ',' is ').replace(' .','.').replace(' ,',',')
+    ssml=f"<speak version='1.0' xmlns='http://www.w3.org/2001/10/synthesis' xml:lang='nl-NL'><voice name='nl-NL-MaartenNeural'><prosody rate='-6%'>{escape(say)}</prosody></voice></speak>"
     for poging in range(8):
         req=urllib.request.Request(URL,data=ssml.encode('utf-8'),method='POST',headers={'Ocp-Apim-Subscription-Key':KEY,'Content-Type':'application/ssml+xml; charset=utf-8','X-Microsoft-OutputFormat':'audio-24khz-48kbitrate-mono-mp3'})
         try:
