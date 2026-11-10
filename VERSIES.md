@@ -10,6 +10,7 @@
 
 | Versie | Datum | Test | Live | Wat is er nieuw |
 |---|---|---|---|---|
+| 1.006 | 10 nov 2026 | ✓ | – | Splashscreen: 'Hoe heet je?' gecentreerd; plaatjesknop groter en deels over het naamveld; scherm verschuift niet meer zijwaarts na het kiezen van een plaatje. |
 | 1.005 | 10 nov 2026 | ✓ | – | Splashscreen: de oranje Start-knop is even breed als het naamvak erboven. |
 | 1.004 | 10 nov 2026 | ✓ | – | Rondleiding per speler: elke nieuwe speler krijgt hem (met de voorleesvraag). Knop 'Rondleiding opnieuw bekijken' bij Instellingen › Ouders. |
 | 1.003 | 10 nov 2026 | ✓ | – | Gebruiksgemak: rondleiding met Lucky en vraag om voor te lezen; uitleg bij lessen op slot; geen naamloze 'Speler' meer; spelers hernoemen en verwijderen; bewaarcode om voortgang over te zetten; nieuwe Spelen-tab met alle spelletjes per niveau; lesnamen op drie regels; Mijn shuttles met sterren per onderwerp en plaatjes verdienen; vegen tussen uitlegschermen; schakelaars in de instellingen; trainer-tab verborgen (versienummer vasthouden); oranje knoppen beter leesbaar. |

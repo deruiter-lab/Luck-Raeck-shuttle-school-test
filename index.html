@@ -991,6 +991,16 @@ body.onsplash .tbar{display:none}
   .swi{width:44px;height:26px}.swi::after{width:20px;height:20px}.swi:checked::after{transform:translateX(18px)}
   .swrow{padding:1px 0;font-size:14px}.vbox small{display:none}.vbox{padding:8px 12px}.swrow small{font-size:12px}
 }
+/* 1.006: naamvak op het splashscreen — titel gecentreerd, groter plaatje dat over het invoerveld valt */
+.splash2 .spname>label[for=spn]{align-self:center;padding-left:0;text-align:center}
+.splash2 .sp-in{position:relative;display:block;width:100%}
+.splash2 .sp-in input{width:100%;padding-inline:58px;box-sizing:border-box}
+.splash2 .spav{position:absolute;left:-10px;top:50%;transform:translateY(-50%);z-index:2;width:68px;height:68px}
+.splash2 .spav>svg{width:68px;height:68px;box-shadow:0 0 0 3px #fff,0 8px 16px -6px rgba(0,0,30,.65)}
+.splash2 .spav.empty .spav-0{width:68px;height:68px;box-sizing:border-box;background:#3a49dc;border:2.5px dashed rgba(255,255,255,.9);box-shadow:0 8px 16px -6px rgba(0,0,30,.65)}
+.splash2 .spav-0 svg{width:28px;height:28px}
+.splash2 .spav-e{right:-2px;bottom:-2px;width:24px;height:24px}
+@media (max-height:700px){.splash2 .spav,.splash2 .spav>svg,.splash2 .spav.empty .spav-0{width:60px;height:60px}.splash2 .sp-in input{padding-inline:52px}}
 </style>
 
 <header class="bar"><div class="bar-in">
@@ -1142,7 +1152,7 @@ const ic=(n,w)=>I[n].replace('<svg',`<svg width="${w||22}" height="${w||22}"`);
 /* =========================================================
    OPSLAG (per apparaat, per speler)
    ========================================================= */
-const APP_VERSION='1.005';
+const APP_VERSION='1.006';
 const IS_TEST=/-test(\/|$)/i.test(location.pathname)||/^test[.-]/i.test(location.hostname);
 const KEY=IS_TEST?'shuttleschool-test-v1':'shuttleschool-v1';
 if(IS_TEST){document.documentElement.classList.add('envtest');try{document.title='TEST · '+document.title;}catch(e){}}
@@ -3554,6 +3564,8 @@ function splashView(){
     else if(nm&&S.profiles[nm]) h=avatarFor(nm);
     if(h){spav.innerHTML=h+`<span class="spav-e" aria-hidden="true">${I.pencil}</span>`;spav.classList.remove('empty');}
     else {spav.innerHTML=`<span class="spav-0">${I.camera}</span><span class="spav-e" aria-hidden="true">+</span>`;spav.classList.add('empty');}};
+  /* het splashscreen mag nooit zijwaarts verschuiven (focus op het plaatjesvenster deed dat) */
+  app.addEventListener('scroll',()=>{ if(cur.view==='splash'&&app.scrollLeft) app.scrollLeft=0; });
   drawAv(); spn.addEventListener('input',()=>{if(!pick)drawAv(); const w=document.getElementById('spwarn'); if(w) w.remove();});
   const openPk=o=>{pk.hidden=!o;spav.setAttribute('aria-expanded',o?'true':'false');if(o){pm.textContent='';const f=pk.querySelector('button[data-spav]');if(f)f.focus();}};
   spav.onclick=()=>openPk(pk.hidden); document.getElementById('sppx').onclick=()=>openPk(false);
