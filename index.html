@@ -1142,7 +1142,7 @@ const ic=(n,w)=>I[n].replace('<svg',`<svg width="${w||22}" height="${w||22}"`);
 /* =========================================================
    OPSLAG (per apparaat, per speler)
    ========================================================= */
-const APP_VERSION='1.003';
+const APP_VERSION='1.004';
 const IS_TEST=/-test(\/|$)/i.test(location.pathname)||/^test[.-]/i.test(location.hostname);
 const KEY=IS_TEST?'shuttleschool-test-v1':'shuttleschool-v1';
 if(IS_TEST){document.documentElement.classList.add('envtest');try{document.title='TEST · '+document.title;}catch(e){}}
@@ -2848,7 +2848,7 @@ function homeView(){
   </div>
   ${S.auto?voiceWarn():''}`;
   const nb=document.getElementById('next'); if(nb) nb.onclick=()=>{ if(ns) doStep(ns); else go({view:'level',n:5,tab:'spel'}); };
-  if(!S.toured&&!S.testmode) setTimeout(()=>{ if(cur.view==='home'&&!document.querySelector('.tour')) startTour(); },450);
+  if(!P().toured) setTimeout(()=>{ if(cur.view==='home'&&!document.querySelector('.tour')) startTour(); },450);
   const bb=document.getElementById('bak'); if(bb) bb.onclick=()=>startQuiz({n:1,title:'Foutenbak',kind:'bak',src:()=>bakDue().slice(0,8).map(b=>b.r)});
   const bg=document.getElementById('bngame'); if(bg) bg.onclick=()=>go({view:'games'});
   const bp=document.getElementById('bnpot'); if(bp) bp.onclick=()=>{kaching(.6);go({view:'mijn'});};
@@ -3327,13 +3327,13 @@ function svgToPng(svg,w,h){return new Promise((res,rej)=>{const img=new Image();
 /* rondleiding bij de eerste keer: Lucky vraagt of hij moet voorlezen en wijst de belangrijkste plekken aan */
 function startTour(){
   const steps=[];
-  if(!S.autoAsked) steps.push({ask:true,t:`Hoi ${S.current}! Ik ben Lucky. Zal ik alles voor je voorlezen?`});
+  if(!window.__sndSet) steps.push({ask:true,t:`Hoi ${S.current}! Ik ben Lucky. Zal ik alles voor je voorlezen?`});
   steps.push({sel:'#next',t:'Hier leer je de spelregels, les voor les. Tik op de oranje kaart om te beginnen.'});
   steps.push({sel:'#tbar [data-t="mijn"]',t:'Bij elk goed antwoord verdien je shuttles. Hier zie je hoeveel je er hebt.'});
   steps.push({sel:'#tbar [data-t="spel"]',t:'Hier speel je spelletjes. Zo vaak als je wilt!'});
   const ov=document.createElement('div'); ov.className='tour'; ov.setAttribute('role','dialog'); ov.setAttribute('aria-modal','true'); ov.setAttribute('aria-label','Rondleiding');
   document.body.appendChild(ov); let k=0;
-  const end=()=>{S.toured=true;S.autoAsked=true;save();hush();ov.remove();};
+  const end=()=>{P().toured=true;S.autoAsked=true;save();hush();ov.remove();};
   const show=()=>{ const st=steps[k]; hush(); let spot='', pos='center';
     if(st.sel){ const el=document.querySelector(st.sel); if(el){ const r=el.getBoundingClientRect(); const pad=6;
       spot=`<div class="tr-spot" style="left:${r.left-pad}px;top:${r.top-pad}px;width:${r.width+pad*2}px;height:${r.height+pad*2}px"></div>`; pos=r.top>innerHeight/2?'above':'below';
@@ -3409,6 +3409,7 @@ function settingsView(){
     <p class="small"><b>Hulp:</b> met de oranje luidspreker laat je elke tekst voorlezen (of zet automatisch voorlezen aan bij Algemeen), en het gloeilampje geeft een hint zonder het antwoord te verklappen. Foute vragen komen later terug in de foutenbak.</p>
     <p class="small"><b>Als app op je telefoon of tablet:</b> open de Shuttle-school in Safari (iPhone/iPad) of Chrome (Android). Kies <b>Deel › Zet op beginscherm</b> of <b>⋮ › App installeren</b>. Daarna start je de app met het shuttle-icoon, ook zonder internet.</p>
     <p class="small"><b>Gegevens:</b> voortgang, shuttles en een eventuele foto van je kind staan alleen op dit apparaat, per voornaam. Er gaat niets naar de club of naar internet.</p>
+    <p><button class="btn alt small" id="tour2">${I.play||''} Rondleiding opnieuw bekijken</button></p>
     <p class="small muted vers" id="vers">Versie ${APP_VERSION}${IS_TEST?' · testversie':''} · trainer? houd dit vast</p>`;
   if(tab==='trainer'){
     if(!trainerOk) body=`<form class="row" id="tf"><label for="tc" class="note">Trainerscode</label><input type="password" id="tc" autocomplete="off" style="width:150px"><button class="btn alt small" type="submit">Open</button></form><p class="note" id="tmsg" role="status"></p>`;
@@ -3450,6 +3451,7 @@ function settingsView(){
     if(!r){m.textContent='Deze code klopt niet. Kopieer hem nog eens helemaal.';return;}
     if(S.profiles[r.n]&&bwld.dataset.ok!==r.n){bwld.dataset.ok=r.n; bwld.textContent=`Ja, overschrijf ${r.n}`; m.textContent=`Er is al een speler ${r.n} op dit apparaat. Nog een keer tikken overschrijft die voortgang.`;return;}
     const old=S.profiles[r.n]; if(old&&old.photo&&!r.p.photo) r.p.photo=old.photo; S.profiles[r.n]=r.p; S.current=r.n; save(); cur.bw=false; render(); toast(`Voortgang van ${esc(r.n)} staat nu op dit apparaat.`,true);};
+  const t2=document.getElementById('tour2'); if(t2) t2.onclick=()=>{P().toured=false;save();go({view:'home'});};
   const vr=document.getElementById('vers'); if(vr){ let tm=null; const st=()=>{tm=setTimeout(()=>{S.trtab=true;save();cur.tab='trainer';render();toast('Trainer-tab staat aan.',true);},1600);}; const en=()=>clearTimeout(tm);
     vr.addEventListener('pointerdown',st); ['pointerup','pointerleave','pointercancel'].forEach(ev=>vr.addEventListener(ev,en)); vr.addEventListener('contextmenu',e=>e.preventDefault()); }
   const pf=document.getElementById('pf'); if(pf) pf.onsubmit=e=>{e.preventDefault();const nm=document.getElementById('pn').value.trim();if(!nm)return;S.profiles[nm]=S.profiles[nm]||newProfile();S.current=nm;save();render();};
@@ -3561,7 +3563,7 @@ function splashView(){
   pk.querySelectorAll('[data-spav]').forEach(b=>b.onclick=()=>{ if(b.dataset.req){pm.textContent=`🔒 ${AVS[+b.dataset.spav].n}: ${b.dataset.req} om dit plaatje te krijgen.`;return;} pick={av:+b.dataset.spav};drawAv();openPk(false);});
   ['splib','spcam'].forEach(id=>{const inp=document.getElementById(id); inp.onchange=()=>{const f=inp.files&&inp.files[0]; if(!f) return; pm.textContent='Foto wordt klaargezet…';
     cropPhoto(f,d=>{pick={photo:d};drawAv();openPk(false);},()=>{pm.textContent='Deze foto lukt niet. Probeer een andere foto.';});};});
-  const ss=document.getElementById('spsnd'); ss.onclick=()=>{S.auto=!S.auto;S.autoAsked=true;save();ss.classList.toggle('on',S.auto);ss.setAttribute('aria-checked',S.auto?'true':'false'); if(S.auto) kaching(.5);};
+  const ss=document.getElementById('spsnd'); ss.onclick=()=>{S.auto=!S.auto;S.autoAsked=true;window.__sndSet=true;save();ss.classList.toggle('on',S.auto);ss.setAttribute('aria-checked',S.auto?'true':'false'); if(S.auto) kaching(.5);};
   const applyPick=()=>{ if(!pick||!S.current) return; const q=P();
     if(pick.av!=null){q.av=pick.av;delete q.photo;save();return;}
     const old=q.photo; q.photo=pick.photo; try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){ if(old) q.photo=old; else delete q.photo; } };
