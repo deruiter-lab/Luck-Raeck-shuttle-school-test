@@ -10,6 +10,7 @@
 
 | Versie | Datum | Test | Live | Wat is er nieuw |
 |---|---|---|---|---|
+| 1.007 | 10 nov 2026 | ✓ | – | Shuttle-duel zit nu in de app. Spelen bevat de wedstrijd tegen Noor, Mo of Lisa (vanaf niveau 3, standaard tot 21) en vijf trainingen die per niveau opengaan: Vakkenrace enkel en Lijnrechter enkel (niveau 2), Scheidsrechter (3), Lijnrechter dubbel (4), Vakkenrace dubbel (5). De oude spelletjes zijn eruit; het niveauscherm toont alleen nog lessen. Sterren van de trainingen staan op Mijn shuttles. |
 | 1.006 | 10 nov 2026 | ✓ | – | Splashscreen: 'Hoe heet je?' gecentreerd; plaatjesknop groter en deels over het naamveld; scherm verschuift niet meer zijwaarts na het kiezen van een plaatje. |
 | 1.005 | 10 nov 2026 | ✓ | – | Splashscreen: de oranje Start-knop is even breed als het naamvak erboven. |
 | 1.004 | 10 nov 2026 | ✓ | – | Rondleiding per speler: elke nieuwe speler krijgt hem (met de voorleesvraag). Knop 'Rondleiding opnieuw bekijken' bij Instellingen › Ouders. |
