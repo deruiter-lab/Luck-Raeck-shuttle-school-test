@@ -2648,7 +2648,7 @@ let NAV=[], skipPop=0, guard=null, HIST=true;
 const SKIPV=['quiz','result','review','splash'];
 const navKey=o=>o?[o.view,o.n,o.li,o.i,o.review?1:0].join('|'):'';
 function prevIdx(){for(let k=NAV.length-1;k>=0;k--) if(!SKIPV.includes(NAV[k].view)) return k; return -1;}
-function go(v,dir,fromPop){hush();stopTimer();
+function go(v,dir,fromPop){hush();stopTimer();document.querySelectorAll('.potchip').forEach(x=>x.remove());
   if(!fromPop&&cur&&cur.view&&(cur.view!=='splash'||cur.from)){
     let k=-1; if(dir==='back'){const key=navKey(v); for(let j=NAV.length-1;j>=0;j--) if(navKey(NAV[j])===key){k=j;break;}}
     if(k>=0){const drop=NAV.length-k; NAV.length=k; if(HIST){try{skipPop+=1;history.go(-drop);}catch(e){skipPop-=1;}}}
