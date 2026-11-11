@@ -4,8 +4,8 @@ import json, os, sys, time, subprocess, urllib.request, urllib.error
 from xml.sax.saxutils import escape
 KEY=os.environ.get('AZURE_SPEECH_KEY','').strip(); REG=os.environ.get('AZURE_SPEECH_REGION','westeurope').strip().lower()
 if not KEY: sys.exit('AZURE_SPEECH_KEY ontbreekt (Settings > Secrets and variables > Actions).')
-# korter maken: stilte aan begin en eind weg, lange pauzes tussen zinsdelen ingekort, iets vlotter tempo
-KORT='silenceremove=start_periods=1:start_threshold=-48dB:start_silence=0.03:stop_periods=-1:stop_duration=0.12:stop_threshold=-45dB:stop_silence=0.08,atempo=1.05'
+# korter maken: stilte aan begin en eind weg, lange pauzes tussen zinsdelen ingekort (spreektempo zelf ongewijzigd)
+KORT='silenceremove=start_periods=1:start_threshold=-48dB:start_silence=0.03:stop_periods=-1:stop_duration=0.15:stop_threshold=-45dB:stop_silence=0.12'
 def kort(pad):
     tmp=pad+'.tmp.mp3'
     r=subprocess.run(['ffmpeg','-nostdin','-loglevel','error','-y','-i',pad,'-af',KORT,'-ar','24000','-ac','1','-b:a','48k',tmp])
