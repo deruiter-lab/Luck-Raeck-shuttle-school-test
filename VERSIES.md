@@ -10,6 +10,7 @@
 
 | Versie | Datum | Test | Live | Wat is er nieuw |
 |---|---|---|---|---|
+| 1.011 | 11 nov 2026 | ✓ | – | Maarten praat vlotter: stilte aan begin en eind van elk fragment weg, lange pauzes tussen zinsdelen ingekort en tempo iets omhoog (alle ~2000 opnames, ruim 30% korter). Volgende fragmenten worden alvast opgehaald, zodat er geen wachttijd tussen zinnen zit. Nieuwe opnames worden automatisch net zo ingekort. |
 | 1.010 | 10 nov 2026 | ✓ | – | Speler 'Mik': in de animaties vliegt er een vogeltje rondjes om het hoofd van Blauw. |
 | 1.009 | 10 nov 2026 | ✓ | – | Alles door Maarten voorgelezen: ontbrekende teksten (rondleiding, slotjes, resultaten, Shuttle-duel en trainingen) worden automatisch ingesproken via GitHub Actions. Zinnen met scores en tijden worden opgebouwd uit ingesproken stukjes en getallen. '+1 shuttle' wordt niet meer voorgelezen; 'Je hebt 1 shuttle verdiend'. |
 | 1.008 | 10 nov 2026 | ✓ | – | Drie nieuwe trainingen in Spelen: Lege plek (niveau 2, naar waar de ander niet staat, vanaf niveau 3 ook de juiste slag), Let of fout? (niveau 3, doorspelen/let/fout met de animaties uit de lessen) en Servicecheck (niveau 4, goede service, fout of let). Het antwoord-label in de animaties verschijnt pas na je antwoord. Tijdelijke shuttleteller staat in de spellen linksonder, zodat hij geen uitleg bedekt. |

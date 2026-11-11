@@ -1,9 +1,16 @@
 """Spreekt ontbrekende teksten in met Azure (Maarten) en zet ze in audio/m2.
 Leest stemmen/nieuw.tsv (hash TAB tekst). Bestaat audio/m2/<hash>.mp3 al, dan wordt die overgeslagen."""
-import json, os, sys, time, urllib.request, urllib.error
+import json, os, sys, time, subprocess, urllib.request, urllib.error
 from xml.sax.saxutils import escape
 KEY=os.environ.get('AZURE_SPEECH_KEY','').strip(); REG=os.environ.get('AZURE_SPEECH_REGION','westeurope').strip().lower()
 if not KEY: sys.exit('AZURE_SPEECH_KEY ontbreekt (Settings > Secrets and variables > Actions).')
+# korter maken: stilte aan begin en eind weg, lange pauzes tussen zinsdelen ingekort, iets vlotter tempo
+KORT='silenceremove=start_periods=1:start_threshold=-48dB:start_silence=0.03:stop_periods=-1:stop_duration=0.12:stop_threshold=-45dB:stop_silence=0.08,atempo=1.05'
+def kort(pad):
+    tmp=pad+'.tmp.mp3'
+    r=subprocess.run(['ffmpeg','-nostdin','-loglevel','error','-y','-i',pad,'-af',KORT,'-ar','24000','-ac','1','-b:a','48k',tmp])
+    if r.returncode==0 and os.path.getsize(tmp)>500: os.replace(tmp,pad)
+    elif os.path.exists(tmp): os.remove(tmp)
 URL=f'https://{REG}.tts.speech.microsoft.com/cognitiveservices/v1'
 D='audio/m2'; idxf=os.path.join(D,'index.json'); idx=json.load(open(idxf,encoding='utf-8')); have=set(idx['h'])
 rows=[l.rstrip('\r\n').lstrip('﻿').split('\t',1) for l in open('stemmen/nieuw.tsv',encoding='utf-8') if '\t' in l]
@@ -17,7 +24,7 @@ for n,(h,t) in enumerate(todo,1):
         try:
             data=urllib.request.urlopen(req,timeout=60).read()
             if len(data)<500: raise RuntimeError('te klein')
-            open(os.path.join(D,h+'.mp3'),'wb').write(data); break
+            open(os.path.join(D,h+'.mp3'),'wb').write(data); kort(os.path.join(D,h+'.mp3')); break
         except urllib.error.HTTPError as e:
             if e.code in (401,403): sys.exit('Sleutel of regio klopt niet.')
             time.sleep(min(60,10*(poging+1)))

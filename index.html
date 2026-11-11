@@ -1295,7 +1295,7 @@ const ic=(n,w)=>I[n].replace('<svg',`<svg width="${w||22}" height="${w||22}"`);
 /* =========================================================
    OPSLAG (per apparaat, per speler)
    ========================================================= */
-const APP_VERSION='1.010';
+const APP_VERSION='1.011';
 const IS_TEST=/-test(\/|$)/i.test(location.pathname)||/^test[.-]/i.test(location.hostname);
 const KEY=IS_TEST?'shuttleschool-test-v1':'shuttleschool-v1';
 if(IS_TEST){document.documentElement.classList.add('envtest');try{document.title='TEST · '+document.title;}catch(e){}}
@@ -1456,12 +1456,15 @@ function numParts(t){ const s=String(t).trim().replace(/([0-9]+):([0-9]{2})/g,(m
     else { const y=x.replace(/^[\s,;:\-–]+/,'').trim(); if(/[A-Za-zÀ-ÿ]/.test(y)) out.push(y); } }
   return out; }
 function expandNums(items){ return items.flatMap(it=>{ if(clipUrl(it.t,it.w)) return [it]; const ps=numParts(it.t); if(ps&&ps.length&&ps.every(p=>clipUrl(p))) return ps.map(p=>({t:p,el:it.el})); return [it]; }); }
+const PREF=new Set();
 function playClips(items,btn,force){
   items=expandNums(items);
   const urls=items.map(it=>clipUrl(it.t,it.w)); if(!urls.length) return false;
   const have=urls.filter(Boolean).length; if(!have) return false;
   if(!force&&have<urls.length&&!synth) return false;
   hush(); const id=++playId; let i=0;
+  /* alle fragmenten alvast ophalen, zodat er tussen de zinsdelen geen wachttijd zit */
+  try{ urls.forEach(u=>{ if(u&&!PREF.has(u)){ PREF.add(u); fetch(u).catch(()=>PREF.delete(u)); } }); }catch(e){}
   if(btn){speakingBtn=btn;btn.classList.add('on');}
   const clear=()=>items.forEach(it=>it.el&&it.el.classList.remove('reading'));
   const done=()=>{clear(); if(btn) btn.classList.remove('on');};
