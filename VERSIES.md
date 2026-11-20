@@ -10,6 +10,7 @@
 
 | Versie | Datum | Test | Live | Wat is er nieuw |
 |---|---|---|---|---|
+| 1.019 | 20 nov 2026 | ✓ |  | Lanceringstest ronde 2: telvragen passen na het antwoord ook op iPhone 14 en kleine Android, bij 29 – 29 en 20 – 20 alleen 'het volgende punt beslist' |
 | 1.018 | 20 nov 2026 | ✓ |  | Lanceringstest: duel-instellingen en uitslag passen zonder scrollen, scorebord na antwoord op één regel, '1 punt' i.p.v. '1 punten', net-uitleg niveau 1 preciezer, foutenbak loopt niet vast op oude vragen, training-klok foutvrij bij wegklikken, 15 nieuwe opnames |
 | 1.017 | 20 nov 2026 | ✓ | ✓ | Ook in de lestoetsen verschijnen uitleglabels in de animatie (zoals 'te hoog: fout van Blauw') pas na het antwoord, zodat ze het antwoord niet voorzeggen. |
 | 1.016 | 20 nov 2026 | ✓ | ✓ | Labels in de animaties zeggen nu wiens fout het is ('fout van Blauw') in plaats van alleen 'fout'. |
