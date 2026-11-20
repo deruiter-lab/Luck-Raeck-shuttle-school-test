@@ -1295,7 +1295,7 @@ const ic=(n,w)=>I[n].replace('<svg',`<svg width="${w||22}" height="${w||22}"`);
 /* =========================================================
    OPSLAG (per apparaat, per speler)
    ========================================================= */
-const APP_VERSION='1.013';
+const APP_VERSION='1.014';
 const IS_TEST=/-test(\/|$)/i.test(location.pathname)||/^test[.-]/i.test(location.hostname);
 const KEY=IS_TEST?'shuttleschool-test-v1':'shuttleschool-v1';
 if(IS_TEST){document.documentElement.classList.add('envtest');try{document.title='TEST · '+document.title;}catch(e){}}
@@ -3471,7 +3471,8 @@ const TRAININGS={
   tel1:{name:'Scheidsrechter',sub:'Telling: roep de stand',topic:'telling',icon:'board',target:5,kind:'tel',lv:3},
   letf:{name:'Let of fout?',sub:'Doorspelen, let of fout?',topic:'fouten',icon:'whistle',target:6,kind:'letf',scene:true,lv:3},
   svc:{name:'Servicecheck',sub:'Goede service, fout of let?',topic:'service',icon:'eye',target:6,kind:'svc',scene:true,lv:4},
-  gap:{name:'Lege plek',sub:'Speel naar waar de ander niet staat',topic:'spel',icon:'gap',target:5,kind:'gap',lv:2}
+  gap:{name:'Lege plek',sub:'Speel naar waar de ander niet staat',topic:'spel',icon:'gap',target:5,kind:'gap',lv:2},
+  punt:{name:'Punt voor wie?',sub:'Wie wint de rally?',topic:'spel',icon:'board',target:8,kind:'punt',scene:true,lv:1}
 };
 const T_N=12;
 const BLAUW='#2b3bd8', ORANJE='#f07f1a';
@@ -3545,7 +3546,7 @@ async function timedChoose(html,opts,o){
 async function trainLoop(){
   while(T.k<T_N){
     tHead();
-    const kd=T.t.kind; const ok=kd==='vak'?await vakRound():kd==='vak2'?await vak2Round():kd==='tel'?await telRound():kd==='letf'?await letfRound():kd==='svc'?await svcRound():kd==='gap'?await gapRound():await lijnRound();
+    const kd=T.t.kind; const ok=kd==='vak'?await vakRound():kd==='vak2'?await vak2Round():kd==='tel'?await telRound():kd==='letf'?await letfRound():kd==='svc'?await svcRound():kd==='gap'?await gapRound():kd==='punt'?await puntRound():await lijnRound();
     T.res.push(ok);
     if(ok) T.good++;
     T.k++;
@@ -3824,6 +3825,31 @@ async function sceneQuestion(c,opts,topic,sitTxt,hint){
   return v;
 }
 
+/* ---------- Punt voor wie? (niveau 1: meteen open) ---------- */
+const PUNT=[
+  {k:'groundR',txt:'Blauw slaat de shuttle naar Oranje.',a:'b',why:'De shuttle valt bij Oranje op de grond. Blauw wint de rally en krijgt een punt.'},
+  {k:'groundL',txt:'Oranje slaat de shuttle naar Blauw.',a:'o',why:'De shuttle valt bij Blauw op de grond. Oranje wint de rally en krijgt een punt.'},
+  {k:'netL',txt:'Blauw slaat de shuttle terug.',a:'o',why:'Blauw slaat de shuttle in het net. Dan krijgt de ander het punt: punt voor Oranje.'},
+  {k:'netR',txt:'Oranje slaat de shuttle terug.',a:'b',why:'Oranje slaat de shuttle in het net. Dan krijgt de ander het punt: punt voor Blauw.'},
+  {k:'outR',txt:'Blauw slaat de shuttle hoog en ver.',a:'o',why:'De shuttle landt achter de lijn: uit. Wie uit slaat, verliest de rally: punt voor Oranje.'},
+  {k:'outL',txt:'Oranje slaat de shuttle hoog en ver.',a:'b',why:'De shuttle landt achter de lijn: uit. Wie uit slaat, verliest de rally: punt voor Blauw.'},
+  {k:'lineR',txt:'Blauw slaat de shuttle naar achteren.',a:'b',why:'De shuttle landt precies op de lijn. Op de lijn is in: punt voor Blauw.'},
+  {k:'bodyL',txt:'Oranje smasht.',a:'o',why:'De shuttle raakt Blauw. Dat telt alsof hij bij Blauw op de grond valt: punt voor Oranje.'},
+  {k:'bodyR',txt:'Blauw smasht.',a:'b',why:'De shuttle raakt Oranje. Dat telt alsof hij bij Oranje op de grond valt: punt voor Blauw.'},
+  {k:'underL',txt:'Blauw slaat de shuttle laag terug.',a:'o',why:'De shuttle gaat onder het net door. Hij moet over het net: punt voor Oranje.'},
+  {k:'netTerug',txt:'Blauw slaat de shuttle terug.',a:'o',why:'De shuttle raakt het net en valt terug bij Blauw. Hij komt niet over het net: punt voor Oranje.'},
+  {k:'terug',txt:'Oranje slaat de shuttle naar Blauw.',a:'door',why:'Blauw slaat de shuttle netjes terug. De rally gaat gewoon door, er is nog geen punt.'},
+  {k:'rally',txt:'Blauw en Oranje spelen.',a:'door',why:'De shuttle gaat steeds over het net heen en weer. Dat is een rally: nog geen punt.'}
+];
+const PUNT_OPTS=[{v:'b',label:'Punt voor Blauw'},{v:'o',label:'Punt voor Oranje'},{v:'door',label:'Nog geen punt'}];
+async function puntRound(){
+  const c=Object.assign({q:'Wie krijgt het punt?'},dealCases(PUNT));
+  const v=await sceneQuestion(c,PUNT_OPTS,'spel','Punt voor wie?','Valt de shuttle bij de ander op de grond? Dan krijg jij het punt. Sla je in het net of uit? Dan krijgt de ander het punt.');
+  const ok=v===c.a;
+  await answerFeedback(ok,`<b>${{b:'Punt voor Blauw',o:'Punt voor Oranje',door:'Nog geen punt'}[c.a]}.</b> ${c.why}`);
+  return ok;
+}
+
 /* ---------- Let of fout? ---------- */
 const LETF=[
   {k:'touchL',txt:'Blauw speelt bij het net.',a:'fout',why:'Blauw raakt het net. Raak je met je racket, lichaam of kleding het net, dan is dat een fout.'},
@@ -3969,7 +3995,7 @@ function trainEnd(){
 const MATCH_LV=3; /* de wedstrijd gaat open bij niveau 3 */
 const trainOpen=id=>levelOpen(TRAININGS[id].lv);
 function earn(n,el){ if(G) G.earned+=n; award(n,el); }
-const GROUPS=[['spel',['gap']],['service',['vak1','svc','vak2']],['lijnen',['lijn1','lijn2']],['telling',['tel1']],['fouten',['letf'],'Fouten en let']];
+const GROUPS=[['spel',['punt','gap']],['service',['vak1','svc','vak2']],['lijnen',['lijn1','lijn2']],['telling',['tel1']],['fouten',['letf'],'Fouten en let']];
 function lockMsg(m){ toast(m,true); if(S.auto) speak(m); }
 function trainTile(id){
   const t=TRAININGS[id], o=trainOpen(id), r=trainRec(id);
