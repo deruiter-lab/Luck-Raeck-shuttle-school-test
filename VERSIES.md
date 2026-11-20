@@ -10,6 +10,7 @@
 
 | Versie | Datum | Test | Live | Wat is er nieuw |
 |---|---|---|---|---|
+| 1.017 | 20 nov 2026 | ✓ | – | Ook in de lestoetsen verschijnen uitleglabels in de animatie (zoals 'te hoog: fout van Blauw') pas na het antwoord, zodat ze het antwoord niet voorzeggen. |
 | 1.016 | 20 nov 2026 | ✓ | – | Labels in de animaties zeggen nu wiens fout het is ('fout van Blauw') in plaats van alleen 'fout'. |
 | 1.015 | 20 nov 2026 | ✓ | – | Animaties 'uit': de shuttle landt nu rechtop, duidelijk achter de achterlijn. Eerder lagen de veren over de lijn, waardoor 'uit' op 'op de lijn' leek (o.a. in Punt voor wie?). |
 | 1.014 | 20 nov 2026 | ✓ | – | Nieuwe training 'Punt voor wie?' (Het spel), meteen open vanaf niveau 1: kijk naar de animatie en kies punt voor Blauw, punt voor Oranje of nog geen punt. Ingesproken door Maarten. |

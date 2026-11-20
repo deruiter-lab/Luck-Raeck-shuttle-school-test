@@ -1121,6 +1121,8 @@ body.onsplash .tbar{display:none}
 .dg-scene{width:100%;height:100%;display:flex;align-items:center;justify-content:center}
 .dg-scene svg{width:100%;height:auto;max-height:100%}
 .dg-scene.ask g.endonly{display:none}
+/* ook in de lestoetsen: uitleglabels in de animatie pas tonen na het antwoord */
+.qstage:not(.answered) #art g.endonly{display:none}
 .dg-scenebox .replay{top:auto;bottom:10px;right:10px}
 .dg-panel .say em{font-style:normal;opacity:.8}
 /* in de spellen staat de tijdelijke shuttleteller linksonder, over Lucky heen, zodat hij geen tekst bedekt */
@@ -1295,7 +1297,7 @@ const ic=(n,w)=>I[n].replace('<svg',`<svg width="${w||22}" height="${w||22}"`);
 /* =========================================================
    OPSLAG (per apparaat, per speler)
    ========================================================= */
-const APP_VERSION='1.016';
+const APP_VERSION='1.017';
 const IS_TEST=/-test(\/|$)/i.test(location.pathname)||/^test[.-]/i.test(location.hostname);
 const KEY=IS_TEST?'shuttleschool-test-v1':'shuttleschool-v1';
 if(IS_TEST){document.documentElement.classList.add('envtest');try{document.title='TEST · '+document.title;}catch(e){}}
