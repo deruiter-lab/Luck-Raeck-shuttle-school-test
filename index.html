@@ -1295,7 +1295,7 @@ const ic=(n,w)=>I[n].replace('<svg',`<svg width="${w||22}" height="${w||22}"`);
 /* =========================================================
    OPSLAG (per apparaat, per speler)
    ========================================================= */
-const APP_VERSION='1.012';
+const APP_VERSION='1.013';
 const IS_TEST=/-test(\/|$)/i.test(location.pathname)||/^test[.-]/i.test(location.hostname);
 const KEY=IS_TEST?'shuttleschool-test-v1':'shuttleschool-v1';
 if(IS_TEST){document.documentElement.classList.add('envtest');try{document.title='TEST · '+document.title;}catch(e){}}
@@ -1861,6 +1861,11 @@ function prScene(spec,label){
  g+=`<g class="psh"${s.v?'':' opacity="0"'} transform="translate(${(s.x||0).toFixed(1)} ${(s.y||0).toFixed(1)}) rotate(${(s.a||0).toFixed(1)}) translate(-16 -22.5)">${SHUTTLE_INNER}</g>`;
  g+=`<g class="puff" opacity="0"><circle r="4" fill="#fff"/><circle cx="6" cy="-2" r="3" fill="#fff"/><circle cx="-6" cy="-1.5" r="3" fill="#fff"/></g>`;
  (spec.over||[]).forEach(x=>g+=x);
+ /* bij "welke slag is dit?": rode stippelcirkel om het raakpunt van de bedoelde slag */
+ if(spec.markHit!=null){ const h=pl.hits[spec.markHit], f=h&&pl.flights.find(f=>f.hit&&Math.abs(f.t-h.t)<2);
+  if(f){ const [cx,cy]=f.segs[0], up=cy>40, ty=up?cy-21:cy+30;
+   g+=`<g class="hitmark" data-at="${Math.max(0,h.t-280)}" style="opacity:0" aria-hidden="true"><circle cx="${cx.toFixed(1)}" cy="${cy.toFixed(1)}" r="14" fill="rgba(255,255,255,.18)" stroke="#fff" stroke-width="4.6" stroke-dasharray="4.5 3.2"/><circle cx="${cx.toFixed(1)}" cy="${cy.toFixed(1)}" r="14" fill="none" stroke="#e0262b" stroke-width="2.6" stroke-dasharray="4.5 3.2"><animateTransform attributeName="transform" type="rotate" from="0 ${cx.toFixed(1)} ${cy.toFixed(1)}" to="360 ${cx.toFixed(1)} ${cy.toFixed(1)}" dur="6s" repeatCount="indefinite"/></circle>
+   <g transform="translate(${cx.toFixed(1)} ${ty.toFixed(1)})"><rect x="-27" y="-9" width="54" height="15" rx="7.5" fill="#e0262b"/><text y="2.6" text-anchor="middle" font-family="Fredoka,sans-serif" font-weight="700" font-size="9.5" fill="#fff">deze slag</text></g></g>`; } }
  if(spec.names!==false) g+=`<text x="${spec.nameB||62}" y="182" text-anchor="middle" font-family="Fredoka,sans-serif" font-weight="700" font-size="13" fill="#fff">Blauw</text><text x="${spec.nameO||278}" y="182" text-anchor="middle" font-family="Fredoka,sans-serif" font-weight="700" font-size="13" fill="#fff">Oranje</text>`;
  g+='</g></svg>';
  PR_PLANS[u]=pl;
@@ -1962,6 +1967,8 @@ function scene(o){
  if(!sp) sp={pl:two(),dur:800};
  if(o.badge) (sp.over=sp.over||[]).push(prBadge(o.badge[0],o.badge[1]));
  sp.seed=sp.seed||k;
+ /* o.mark: de bedoelde slag aanwijzen (de eerste slag van Blauw die geen service is, of de service zelf) */
+ if(o.mark&&sp.shots){ let i=sp.shots.findIndex(x=>x.who==='b'&&x.st!=='serve'&&x.st!=='svhigh'); if(i<0) i=sp.shots.findIndex(x=>x.who==='b'); if(i>=0) sp.markHit=i; }
  return prScene(sp,lab);
 }
 
@@ -2721,7 +2728,7 @@ function prep(q){
     const lv=q.lv||shotLevelFor(q.k||'smash'); const pool=SHOT_LEVEL[Math.max(lv,q.k?shotLevelFor(q.k):lv)];
     const k=q.k||pick(pool); q.k=k;
     const others=shuffle(pool.filter(x=>x!==k)).slice(0,2).map(x=>SHOTS[x][0]);
-    q.q='Kijk goed hoe de shuttle vliegt. Welke slag is dit?'; q.art={scene:{k}};
+    q.q='Kijk goed naar de slag van Blauw met de rode cirkel. Welke slag is dit?'; q.art={scene:{k,mark:1}};
     withOpts(q,SHOTS[k][0],others); if(q.opts.length===2) q.cols='two';
     q.why=`Dit is een ${SHOTS[k][0].toLowerCase()}: ${SHOTS[k][1].charAt(0).toLowerCase()+SHOTS[k][1].slice(1)}`;
   }
