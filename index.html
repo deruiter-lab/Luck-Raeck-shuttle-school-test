@@ -1016,6 +1016,11 @@ body.onsplash .tbar{display:none}
 .dg-pick .opt .dg-face svg{width:44px;height:44px}
 .dg-pick .opt .dg-lvl{margin-left:auto;font-size:12px;font-weight:700;padding:3px 9px;border-radius:999px;background:var(--blue-soft);color:var(--blue);white-space:nowrap}
 .dg-pick .opt .dg-who{min-width:0}
+.dg-opp3 .opt{gap:4px!important;padding:8px 4px 10px!important}.dg-opp3 .opt .dg-lvl{margin:0}.dg-opp3 .dg-who{font-family:var(--display);font-weight:700}@media (max-height:860px){.dg-howcard{display:none!important}}
+@media (max-height:700px){.dg-pick{gap:6px;padding-block:10px}.dg-pick h3{font-size:15px}.dg-pick .opt{min-height:44px}.dg-pick .opts.two .opt small,.dg-pick .opts.three:not(.dg-opp3) .opt small{display:none}.dg-opp3 .opt .dg-face,.dg-opp3 .opt .dg-face svg{width:36px;height:36px}}
+.dg-startbtn{position:sticky;bottom:0;z-index:2;box-shadow:0 -8px 16px -6px var(--bg,#eef3fb)}
+.dg-oppsub{margin:0;font-size:13.5px;color:var(--muted);text-align:center}
+.dg-howto{gap:4px}.dg-howto li{font-size:14px}.dg-howto li::before{width:22px;height:22px;font-size:12.5px}
 .dg-sec{display:flex;flex-direction:column;gap:8px}
 .dg-sec>h3{font-size:16px}
 .bn-go .lk-bento{right:10px;top:8px}
@@ -1077,6 +1082,9 @@ body.onsplash .tbar{display:none}
 .dg-tips{display:grid;gap:6px;margin:0;padding-left:20px;font-size:15px}
 .dg-endnav{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 .dg-endnav .btn{justify-content:center}
+.dg-endd{gap:8px}.dg-endd .dg-ring{width:clamp(96px,15vh,140px)}.dg-endd .note{margin:0;font-size:13px}
+.dg-stats4{grid-template-columns:repeat(4,1fr);gap:6px}.dg-stats4 .bn{padding:8px 6px;text-align:center;align-items:center;border-radius:14px}.dg-stats4 .bn-n{font-size:20px}.dg-stats4 .bn-l{font-size:11px;line-height:1.2}
+.dg-tip1{display:flex;gap:8px;align-items:flex-start;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:8px 12px;font-size:14px;line-height:1.35}.dg-tip1 p{margin:0}.dg-tip1 svg{flex:none;color:var(--orange);margin-top:1px}
 .dg-side .dg-pt{margin-left:auto}
 .dg-side.r .dg-pt{margin-left:0;margin-right:auto}
 @media (max-width:420px){.dg-mid{display:none}.dg-score{grid-template-columns:1fr 1fr;gap:12px}}
@@ -1146,6 +1154,11 @@ body.onsplash .tbar{display:none}
 .dg-mjt small{display:block;font-family:var(--body);font-weight:400;font-size:12.5px;color:var(--muted)}
 .dg-mjr .dg-stars{font-size:15px}
 .dg-mjr.off .dg-stars{font-size:12px;color:var(--muted);letter-spacing:0}
+
+/* kleine Android-schermen (360x640): net iets compacter zodat alles zonder scrollen past */
+/* na het antwoord is er minder ruimte: het scorebord dan op één regel, zodat beide standen zichtbaar blijven */
+@media (max-height:760px){.qstage.answered .board{grid-template-columns:auto auto 1fr auto auto 1fr;gap:4px 8px;padding:6px 14px;font-size:17px}.qstage.answered .board .sc{font-size:22px;text-align:left}.qstage.answered .board .sv{width:20px;height:20px}}
+@media (max-height:660px){main{gap:6px;padding-block:8px}.lvhero{padding:10px 14px}.swrow{padding:1px 0}.vdet summary{font-size:15px}.qstage .fb{padding-block:8px}}
 </style>
 
 <header class="bar"><div class="bar-in">
@@ -1297,7 +1310,7 @@ const ic=(n,w)=>I[n].replace('<svg',`<svg width="${w||22}" height="${w||22}"`);
 /* =========================================================
    OPSLAG (per apparaat, per speler)
    ========================================================= */
-const APP_VERSION='1.017';
+const APP_VERSION='1.018';
 const IS_TEST=/-test(\/|$)/i.test(location.pathname)||/^test[.-]/i.test(location.hostname);
 const KEY=IS_TEST?'shuttleschool-test-v1':'shuttleschool-v1';
 if(IS_TEST){document.documentElement.classList.add('envtest');try{document.title='TEST · '+document.title;}catch(e){}}
@@ -2222,7 +2235,7 @@ const LEVELS=[
   'Tel er steeds één bij op. Tot hoeveel spelen wij ook alweer?'),
  L_('fouten','fouten-1','Fouten bij het net',[
   CE('De shuttle moet <strong>over</strong> het net. Gaat hij <strong>onder</strong> het net door? Dan is het fout.',{net:'onder'}),
-  CE('Blijft de shuttle in het <strong>net</strong> hangen? Ook fout.',{net:'innet'}),
+  CE('Komt de shuttle niet over het net en blijft hij in het <strong>net</strong> hangen? Ook fout.',{net:'innet'}),
   CE('Het net raak je <strong>nooit</strong> aan. Niet met je racket, niet met je hand en niet met je kleren. En je kruipt er niet onderdoor.',{scene:{k:'touchR'}}),
   CE('Raakt de shuttle je <strong>lichaam</strong>? Dan is het ook fout. Je slaat alleen met je racket.',{scene:{k:'bodyL'}})],
   [{t:'punt',k:'netL'},{t:'punt',k:'underL'},{t:'punt',k:'touchR'},{t:'punt',k:'bodyL'},
@@ -2718,7 +2731,7 @@ function prep(q){
   else if(q.t==='vak'){
     const sc=q.fixed!=null?q.fixed:Math.floor(Math.random()*(q.dubbel?20:11));
     q.score=sc;q.a=sc%2===0?1:0;q.opts=['Links','Rechts'];q.cols='two';
-    q.q=q.dubbel?`Dubbelspel. Jullie team heeft <strong>${sc}</strong> punten en serveert. Vanuit welk vak serveren jullie? Tik op het vak.`:`Jij hebt <strong>${sc}</strong> punten en mag serveren. Tik op het vak waar je moet staan.`;
+    q.q=q.dubbel?`Dubbelspel. Jullie team heeft <strong>${sc}</strong> ${sc===1?'punt':'punten'} en serveert. Vanuit welk vak serveren jullie? Tik op het vak.`:`Jij hebt <strong>${sc}</strong> ${sc===1?'punt':'punten'} en mag serveren. Tik op het vak waar je moet staan.`;
     q.art={court:{tap:q.dubbel?'dubbel':'enkel',lab:[[W/2,7.05,'jij staat hier, je kijkt naar het net']]}};
     q.why=sc%2===0?`${sc} is even${sc===0?' (0 telt als even)':''}: je serveert van rechts.`:`${sc} is oneven: je serveert van links.`;
   }
@@ -2781,7 +2794,7 @@ function prepKanon(q){
   const e=dub?0:SI, back=dub?LD:L;
   const T=box==='R'?{x0:e,x1:W/2,y0:-back,y1:-SS}:{x0:W/2,x1:W-e,y0:-back,y1:-SS};
   q.tap=true;q.score=sc;
-  q.q=`${dub?'Dubbelspel':'Enkelspel'}. ${dub?'Jullie team heeft':'Jij hebt'} <strong>${sc}</strong> punten en serveert. Tik op een plek waar je service goed landt.`;
+  q.q=`${dub?'Dubbelspel':'Enkelspel'}. ${dub?'Jullie team heeft':'Jij hebt'} <strong>${sc}</strong> ${sc===1?'punt':'punten'} en serveert. Tik op een plek waar je service goed landt.`;
   q.art={court:{full:true,lab:[[W/2,7.05,'jij staat aan deze kant']]}};
   q.target=T; q.from=[box==='R'?(dub?4.6:4.3):(dub?1.5:1.8),4.2]; q.art.court.player=[[q.from[0],q.from[1],'#2b3bd8','jij']];
   q.check=(mx,my)=>{
@@ -3436,20 +3449,20 @@ function endView(){
   const msg=won?`Goed gedaan, ${esc(g.me)}! Je wint met ${hi}–${lo} van ${o.name}.`:`${o.name} wint deze keer met ${hi}–${lo}. Nog een potje?`;
   G=null; cur.done=1;
   app.innerHTML=`
-  <div class="dg-end">
+  <div class="dg-end dg-endd">
     <div class="label">${won?'Gewonnen!':'Verloren'} · tegen ${o.name}</div>
     <div class="ringwrap">${lucky(won?'cheer':'oops','lk-res')}<div class="dg-ring ${won?'won':''}"><svg viewBox="0 0 120 120" aria-hidden="true"><circle cx="60" cy="60" r="${R0}" fill="none" stroke="var(--blue-soft)" stroke-width="11"/><circle class="arc" id="arc" cx="60" cy="60" r="${R0}" fill="none" stroke-width="11" stroke-linecap="round" stroke-dasharray="0 ${C.toFixed(1)}"/></svg><div class="dg-ringtxt"><b>${g.sc.me}–${g.sc.opp}</b><small>${esc(g.me)} – ${o.name}</small></div></div></div>
     <div class="qrow resmsg"><button class="speak" id="rsp" aria-label="Lees voor">${I.speaker}</button><p class="say">${msg}</p></div>
     ${tot?`<p class="earnchip">${I.shuttle}<span>+<b class="cnt" data-n="${tot}">0</b> shuttles${won?' <small>(3 bonus)</small>':''}</span></p>`:''}
     <p class="note">Bij de uitslag noem je de winnaar eerst: ${hi}–${lo} voor ${won?esc(g.me):o.name}.</p>
   </div>
-  <div class="bento dg-stats">
+  <div class="bento dg-stats dg-stats4">
     <div class="bn"><span class="bn-n">${pct(st.good,st.shots)}</span><span class="bn-l">goede slagkeuze</span></div>
     <div class="bn"><span class="bn-n">${pct(st.away,st.shots)}</span><span class="bn-l">naar de lege plek</span></div>
     <div class="bn"><span class="bn-n">${st.vakOk}<small style="font-size:.55em;color:var(--muted)"> / ${st.vak}</small></span><span class="bn-l">goede vak gekozen</span></div>
     <div class="bn"><span class="bn-n">${st.rq?`${st.rqOk}<small style="font-size:.55em;color:var(--muted)"> / ${st.rq}</small>`:'–'}</span><span class="bn-l">regelvragen goed</span></div>
   </div>
-  <div class="card dg-sec"><h3>Tips van Lucky</h3><ul class="dg-tips">${tips.map(t=>`<li>${t}</li>`).join('')}</ul></div>
+  <div class="dg-tip1">${ic('bulb',20)}<p><b>Tip van Lucky:</b> ${tips[0]}</p></div>
   <div class="dg-endnav"><button class="btn go" id="again">Nog een keer ${I.next}</button><button class="btn alt" id="other">Andere keuzes</button></div>`;
   requestAnimationFrame(()=>requestAnimationFrame(()=>{const a=$('arc'); if(a) a.setAttribute('stroke-dasharray',`${(C*f).toFixed(1)} ${C.toFixed(1)}`);}));
   const cn=app.querySelector('.cnt'); if(cn) setTimeout(()=>countUp(cn),600);
@@ -3535,14 +3548,14 @@ function startTraining(id){
 }
 async function tw(p){ const t=T; const r=await p; if(!T||t!==T||t.dead) throw STOP; return r; }
 function fmtTime(s){ s=Math.round(s); return Math.floor(s/60)+':'+String(s%60).padStart(2,'0'); }
-function tHead(){
+function tHead(){ if(!T||!$('tk')||!$('tclock')) return;
   $('tk').textContent=`Vraag ${Math.min(T.k+1,T_N)} van ${T_N}`; $('trbar').style.width=(T.k/T_N*100)+'%';
   $('tstreak').querySelector('b').textContent=T.streak; $('tclock').querySelector('b').textContent=fmtTime(T.time);
   $('tclock').classList.toggle('over',T.time>T.t.target*T_N);
 }
 /* vraag stellen met de klok aan; geeft {v, secs} terug */
 async function timedChoose(html,opts,o){
-  const t0=performance.now(), tm=setInterval(()=>{ if(!T) return clearInterval(tm); $('tclock').querySelector('b').textContent=fmtTime(T.time+(performance.now()-t0)/1000); },250);
+  const t0=performance.now(), tm=setInterval(()=>{ const tc=$('tclock'); if(!T||!tc) return clearInterval(tm); tc.querySelector('b').textContent=fmtTime(T.time+(performance.now()-t0)/1000); },250);
   try{ const v=await tw(choose(html,opts,o)); T.time+=(performance.now()-t0)/1000; return v; } finally{ clearInterval(tm); }
 }
 async function trainLoop(){
@@ -3754,7 +3767,7 @@ async function vak2Round(){
     v=await timedChoose(`<strong>${TEAM[winner].name} wint de rally.</strong> Het wordt ${standTxt}. Tik het vak van waaruit nu geserveerd wordt.`,[],{topic:'dubbel',sit:'Uit welk vak?',hint:'Kijk naar de score van de partij die serveert: oneven = links, even = rechts. Oranje kijkt naar jou toe: zijn rechts is op het scherm links.',
       taps:Object.keys(DBOX).map(kk=>({r:[DBOX[kk].x0,DBOX[kk].y0,DBOX[kk].x1-DBOX[kk].x0,DBOX[kk].y1-DBOX[kk].y0],v:kk,aria:(kk[0]==='B'?'Vak onder, ':'Vak boven, ')+(kk[2]==='L'?'links op het scherm':'rechts op het scherm')}))});
     ok=v===key; areaRect(DBOX[key],'#22a05a',.4); if(!ok&&DBOX[v]) areaRect(DBOX[v],'#c23b2b',.35,true);
-    why=`${TEAM[st.srv].name} serveert met ${scS} punten: ${even?'even':'oneven'}, dus van ${sideW}.${st.srv==='T'?` Oranje kijkt naar jou toe: zijn ${sideW} is op het scherm ${even?'links':'rechts'}.`:''} ${sNew} serveert.`;
+    why=`${TEAM[st.srv].name} serveert met ${scS} ${scS===1?'punt':'punten'}: ${even?'even':'oneven'}, dus van ${sideW}.${st.srv==='T'?` Oranje kijkt naar jou toe: zijn ${sideW} is op het scherm ${even?'links':'rechts'}.`:''} ${sNew} serveert.`;
   }
   $('taps').innerHTML=''; hideShuttle(); dubDraw(); tScore(st.sc,st.srv); if(type!=='swap'&&!keptServe) bigNumChip(st.sc[winner]);
   await answerFeedback(ok,why);
@@ -4022,11 +4035,11 @@ function setupView(){
   const d=D();
   app.innerHTML=`
   <div class="topline"><button class="back" id="bk">${I.back} Spelen</button><span class="label">Shuttle-duel</span></div>
-  <div class="card dg-sec dg-pick"><h3>Tegenstander</h3><div class="opts" id="dgopp">${Object.entries(OPP).map(([k,x])=>`<button class="opt ${d.opp===k?'on':''}" data-v="${k}" aria-pressed="${d.opp===k}"><span class="dg-face">${oppFace(k)}</span><span class="dg-who">${x.name}<small>${x.sub}</small></span><span class="dg-lvl">${x.lvl}</span></button>`).join('')}</div></div>
+  <div class="card dg-sec dg-pick"><h3>Tegenstander</h3><div class="opts three dg-opp3" id="dgopp">${Object.entries(OPP).map(([k,x])=>`<button class="opt ${d.opp===k?'on':''}" data-v="${k}" aria-pressed="${d.opp===k}" aria-label="${x.name}, ${x.lvl}: ${x.sub}"><span class="dg-face">${oppFace(k)}</span><span class="dg-who">${x.name}</span><span class="dg-lvl">${x.lvl}</span></button>`).join('')}</div><p class="dg-oppsub">${OPP[d.opp]?OPP[d.opp].sub:''}</p></div>
   <div class="card dg-sec dg-pick"><h3>Telling</h3><div class="opts three" id="dglen">${Object.entries(LENS).map(([k,x])=>`<button class="opt ${+d.len===+k?'on':''}" data-v="${k}" aria-pressed="${+d.len===+k}">${x.label}<small>${x.sub}</small></button>`).join('')}</div></div>
   <div class="card dg-sec dg-pick"><h3>Regelmomenten</h3><div class="opts two" id="dgrules"><button class="opt ${d.rules?'on':''}" data-v="1" aria-pressed="${!!d.rules}">Aan<small>Tussendoor regelvragen</small></button><button class="opt ${d.rules?'':'on'}" data-v="0" aria-pressed="${!d.rules}">Uit<small>Alleen spelen</small></button></div></div>
-  <div class="card dg-sec"><h3>Zo speel je</h3><ol class="dg-howto"><li>Kies het goede vak bij de service.</li><li>Kijk hoe de shuttle komt en kies je slag.</li><li>Tik waar de shuttle naartoe moet.</li></ol></div>
-  <button class="btn go wide" id="dgstart">${I.play} Start de wedstrijd</button>`;
+  <div class="card dg-sec dg-howcard"><h3>Zo speel je</h3><ol class="dg-howto"><li>Kies het goede vak bij de service.</li><li>Kijk hoe de shuttle komt en kies je slag.</li><li>Tik waar de shuttle naartoe moet.</li></ol></div>
+  <button class="btn go wide dg-startbtn" id="dgstart">${I.play} Start de wedstrijd</button>`;
   const grp=(id,fn)=>app.querySelectorAll('#'+id+' .opt').forEach(b=>b.onclick=()=>{ fn(b.dataset.v); save(); setupView(); });
   grp('dgopp',v=>D().opp=v); grp('dglen',v=>D().len=+v); grp('dgrules',v=>D().rules=v==='1');
   document.getElementById('bk').onclick=()=>nav({view:'games'},'back');
@@ -4237,10 +4250,13 @@ function slideReview(){
   document.getElementById('nx').onclick=()=>{hush(); if(g===tot-1) out(); else revGo(g+1);};
 }
 function startQuiz(o){
-  const qs=o.src().map(q0=>{const q=prep(q0);q.raw=q0;return q;});
+  /* een vraag die niet (meer) klopt, bijvoorbeeld een oude vraag in de foutenbak, slaan we over in plaats van vast te lopen */
+  const qs=[]; (o.src()||[]).forEach(q0=>{ try{ const q=prep(q0); if(!quizOk(q)) throw 0; q.raw=q0; qs.push(q); }
+    catch(e){ if(o.kind==='bak'){ const p=P(); p.bak=p.bak.filter(b=>b.r!==q0); save(); } } });
   if(!qs.length){go({view:'home'});return;}
   go({view:'quiz',n:o.n,title:o.title,kind:o.kind,li:o.li,gid:o.gid,src:o.src,qs,k:0,good:0,streak:0,earned:0,answered:null,missed:[]});
 }
+function quizOk(q){ if(!q||typeof q!=='object') return false; if(q.tap) return typeof q.check==='function'&&!!q.art; if(typeof q.q!=='string'||!q.q.trim()) return false; if(q.t==='vak') return q.a===0||q.a===1; return Array.isArray(q.opts)&&q.opts.length>1&&q.a>=0&&q.a<q.opts.length&&typeof q.why==='string'; }
 function questionText(q){return (q.pre?q.pre+': ':'')+q.q;}
 function readOut(q){return questionText(q)+(q.opts&&(q.t==='mc'||q.t==='score'||q.t==='dub')?'. '+q.opts.join('? ')+'?':'');}
 function svgPoint(svg,e){
