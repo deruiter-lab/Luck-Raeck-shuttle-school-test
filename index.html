@@ -1295,7 +1295,7 @@ const ic=(n,w)=>I[n].replace('<svg',`<svg width="${w||22}" height="${w||22}"`);
 /* =========================================================
    OPSLAG (per apparaat, per speler)
    ========================================================= */
-const APP_VERSION='1.014';
+const APP_VERSION='1.015';
 const IS_TEST=/-test(\/|$)/i.test(location.pathname)||/^test[.-]/i.test(location.hostname);
 const KEY=IS_TEST?'shuttleschool-test-v1':'shuttleschool-v1';
 if(IS_TEST){document.documentElement.classList.add('envtest');try{document.title='TEST · '+document.title;}catch(e){}}
@@ -1792,7 +1792,7 @@ function prPlan(spec){
   const arr=f.t+durs[0];
   if(nx.st){const C2=prBlade(P[nx.who],PR_ST[nx.st].hit,bodyAt(nx.who,arr)); segs=[[C1[0],C1[1],0,cy,C2[0],C2[1]]];}
   else if(nx.catch){const C2=prBlade(P[nx.catch.who],PR_ST[nx.catch.st].hit,bodyAt(nx.catch.who,arr)); segs=[[C1[0],C1[1],0,cy,C2[0],C2[1]]];}
-  else if(nx.land!=null){segs=[[C1[0],C1[1],0,cy,nx.land,PR_FLOOR]]; endAng=nx.land>C1[0]?-80.7:80.7;}
+  else if(nx.land!=null){segs=[[C1[0],C1[1],0,cy,nx.land,PR_FLOOR]]; endAng=nx.stand?0:nx.land>C1[0]?-80.7:80.7;}
   else if(nx.body){const b=P[nx.body],B=bodyAt(nx.body,arr),bsc=b.sc||1,bx=b.x+b.d*bsc*(B.dx-2),by=152+bsc*(92+B.cr-152); segs=[[C1[0],C1[1],0,cy,bx,by],[bx,by,bx-b.d*10,110,bx-b.d*16,PR_FLOOR]]; endAng=b.d>0?80.7:-80.7;}
   else if(nx.net||nx.netTape){const side=C1[0]<170?-1:1, nxp=170+side*(nx.netTape?3:7), ny=nx.netTape?72:96;
    segs=[[C1[0],C1[1],0,s.cy!=null?s.cy:(nx.netTape?20:70),nxp,ny],[nxp,ny,nxp+side*8,ny+18,170+side*(nx.netTape?24:12),PR_FLOOR]]; endAng=side<0?80.7:-80.7; clear=false;}
@@ -1935,8 +1935,8 @@ function scene(o){
   case 'touchR': sp={pl:two(B(),O(234)),bkeys:{o:[[1900,0,0,3,0],[2250,6,0,6,12,'out'],[3000,6,0,6,12]]},shots:[{who:'b',st:'serve',cy:20},{land:192}],keys:{o:[[1900,PR_NEUTRAL],[2250,[95,100],null,'out'],[3000,[95,100]]]},over:[prMark(172,82)]}; lab='Oranje raakt met haar racket het net.'; break;
   case 'underL': sp={pl:two(),shots:[{who:'o',st:'serve'},{who:'b',st:'lob'},{under:232}],over:[prMark(170,128)]}; lab='Blauw slaat de shuttle onder het net door.'; break;
   case 'underRk': sp={pl:two(B(140),O()),dur:2200,keys:{b:[[500,[60,30]],[1300,[165,140],150,'io'],[2200,[165,140]]]},over:[prMark(176,118),prBadge('fout','#c23b2b',170)]}; lab='Blauw komt met zijn racket onder het net door bij Oranje: fout.'; break;
-  case 'outR': sp={pl:two(B(),O(250)),shots:[{who:'o',st:'serve'},{who:'b',st:'lob',cy:-60},{land:332}],over:[prMark(330,150)]}; lab='Blauw slaat de shuttle achter de achterste lijn van Oranje: uit.'; break;
-  case 'outL': sp={pl:two(B(90),O()),shots:[{who:'b',st:'serve'},{who:'o',st:'lob',cy:-60},{land:8}],over:[prMark(10,150)]}; lab='Oranje slaat de shuttle achter de achterste lijn van Blauw: uit.'; break;
+  case 'outR': sp={pl:two(B(),O(250)),shots:[{who:'o',st:'serve'},{who:'b',st:'lob',cy:-60},{land:331,stand:1}],over:[prMark(331,146)]}; lab='Blauw slaat de shuttle achter de achterste lijn van Oranje: uit.'; break;
+  case 'outL': sp={pl:two(B(90),O()),shots:[{who:'b',st:'serve'},{who:'o',st:'lob',cy:-60},{land:9,stand:1}],over:[prMark(9,146)]}; lab='Oranje slaat de shuttle achter de achterste lijn van Blauw: uit.'; break;
   case 'lineR': sp={pl:two(B(),O(250)),shots:[{who:'o',st:'serve'},{who:'b',st:'lob',cy:-60},{land:318.6}],over:[prLoupe(300,64,318.9,150)]}; lab='Blauw slaat de shuttle precies op de achterste lijn van Oranje: in.'; break;
   case 'bodyL': sp={pl:two(),shots:[{who:'b',st:'serve'},{who:'o',st:'smash'},{body:'b'}],over:[prMark(60,92)]}; lab='Oranje smasht de shuttle tegen het lichaam van Blauw.'; break;
   case 'bodyR': sp={pl:two(),shots:[{who:'o',st:'serve'},{who:'b',st:'smash'},{body:'o'}],over:[prMark(280,92)]}; lab='Blauw smasht de shuttle tegen het lichaam van Oranje.'; break;

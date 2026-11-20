@@ -10,6 +10,7 @@
 
 | Versie | Datum | Test | Live | Wat is er nieuw |
 |---|---|---|---|---|
+| 1.015 | 20 nov 2026 | ✓ | – | Animaties 'uit': de shuttle landt nu rechtop, duidelijk achter de achterlijn. Eerder lagen de veren over de lijn, waardoor 'uit' op 'op de lijn' leek (o.a. in Punt voor wie?). |
 | 1.014 | 20 nov 2026 | ✓ | – | Nieuwe training 'Punt voor wie?' (Het spel), meteen open vanaf niveau 1: kijk naar de animatie en kies punt voor Blauw, punt voor Oranje of nog geen punt. Ingesproken door Maarten. |
 | 1.013 | 20 nov 2026 | ✓ | ✓ | 'Welke slag is dit?': rode stippelcirkel met 'deze slag' om het raakpunt van de bedoelde slag van Blauw; vraagtekst aangepast (nieuwe opname Maarten). |
 | 1.012 | 11 nov 2026 | ✓ | ✓ | Maarten iets rustiger dan in 1.011: weer zijn gewone spreektempo en iets meer adem tussen zinsdelen. Stilte aan begin en eind blijft weg (ruim 20% korter dan 1.010). |
