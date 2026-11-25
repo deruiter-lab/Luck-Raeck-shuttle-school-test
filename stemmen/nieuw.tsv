@@ -1,25 +1,30 @@
-98215111	120 seconden.
-2b0cb3e9	Hier speel je een wedstrijd of doe je een training.
-813b559f	De wedstrijd gaat open als je bij niveau 3 bent.
-439ef000	Jij bent de scheidsrechter:
-e1f12ef7	Zonder scheidsrechter:
-c764ece8	Niets, hij mag alles kiezen?
-e876a1d1	Mo beslist over zijn kant en roept uit.
-a70156fd	Dan serveert hij van links en ontvang jij ook links: schuin tegenover elkaar.
-17258c9b	Dan serveert hij van rechts en ontvang jij ook rechts: schuin tegenover elkaar.
-3cc17729	Mo staat bij de service met zijn voet op de lijn.
-50d2a62f	Dan heeft hij tijd genoeg.
-4e7a1ade	Mo tilt een voet van de grond terwijl hij serveert.
-8964837b	Wanneer win je de game nu?
-a9dbce15	Jullie spelen een nieuwe game?
-1ee2d4cf	Wordt het 14 gelijk, dan wint wie het vijftiende punt maakt.
-eb9e2d7e	Hij kiest serveren.
-759c60bd	Noor wint de toss.
-63ed0af3	Mo wint de toss.
-29645834	Lisa wint de toss.
-094da4fb	Zij kiest ontvangen, dus jij serveert.
-f8bafb6d	Hij kiest ontvangen, dus jij serveert.
-a2f0ec13	Rally
-3d5980e2	jij serveert
-0d7f1def	Dan moet hij ver lopen.
-d0fbc9d0	Hij moest ver lopen en was te laat.
+0762d736	Wat gebeurt er nu?
+79050a7e	Wie het vijftiende punt maakt, wint?
+65fb0818	Doorspelen tot 2 punten verschil?
+e0f07e13	De game wordt opnieuw gespeeld?
+fdc09a22	Bij 14 gelijk beslist het volgende punt.
+63d135da	Langer dan 15 punten duurt een game nooit.
+e272261d	Er is een maximum aan punten in een game.
+88b6f8ef	Wie het eenentwintigste punt maakt, wint?
+4f0ed063	Langer dan 21 punten duurt een game nooit.
+54688b68	Wordt het 20 gelijk, dan wint wie het eenentwintigste punt maakt.
+9c586e49	Wie het dertigste punt maakt, wint?
+4ef22e7a	Bij 29 gelijk beslist het volgende punt.
+377cebbd	Langer dan 30 punten duurt een game nooit.
+8ae12450	Wordt het 29 gelijk, dan wint wie het dertigste punt maakt.
+fb17edc6	Met welke slag krijg je de shuttle snel in het midden?
+0015d960	Een smash brengt een hoge shuttle in het midden.
+09fc89a5	Een hoge shuttle naar het midden: smash.
+4f6297e2	Een drive brengt een lage shuttle in het midden.
+4006db1b	Een lage shuttle naar het midden: drive.
+ac57487f	De service gaat schuin over het net naar het vak links aan de overkant, breed en kort in dubbel.
+7c50f047	De service gaat schuin over het net naar het vak rechts aan de overkant, breed en kort in dubbel.
+ccc9ed30	Ja, ze wisselen?
+18e86cca	Nee, ze blijven staan?
+8dfc9ec9	Wat mag er nu?
+5db1167b	Hooguit 60 seconden pauze?
+b834ac0c	Hooguit 2 minuten pauze?
+92a5cc39	Geen pauze, doorspelen?
+b0fd7da6	Halverwege de game (bij 6 punten) mag je hooguit 60 seconden pauzeren.
+fef93838	Halverwege de game (bij 8 punten) mag je hooguit 60 seconden pauzeren.
+fdcb0d04	Halverwege de game (bij 11 punten) mag je hooguit 60 seconden pauzeren.
